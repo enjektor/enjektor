@@ -10,15 +10,6 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>enjektor-core</artifactId>
-  <version>0.0.2</version>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.reflections</groupId>
-      <artifactId>reflections</artifactId>
-      <version>0.9.11</version>
-    </dependency>
-  </dependencies>
+  <artifactId>enjektor-utils</artifactId>
 
 </project>
