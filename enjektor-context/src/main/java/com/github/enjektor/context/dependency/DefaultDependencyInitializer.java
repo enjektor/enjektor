@@ -64,7 +64,6 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
                     applicationContextMap.put(bean.getClassType(), bean);
                 });
 
-            int x = 10;
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

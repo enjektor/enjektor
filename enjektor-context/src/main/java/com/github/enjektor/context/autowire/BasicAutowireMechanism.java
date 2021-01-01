@@ -16,8 +16,9 @@ public class BasicAutowireMechanism implements AutowireMechanism {
 
     @Override
     public final void autowire(final Object object,
-                               final Map<Class<?>, Bean> applicationContext) throws IllegalAccessException, InstantiationException {
+                               final Map<Class<?>, Bean> applicationContext) throws IllegalAccessException {
         final Set<Field> allFieldsThatAnnotatedByInject = fieldScanner.scan(object.getClass());
+        if (allFieldsThatAnnotatedByInject.size() == 0) return;
 
         for (final Field field : allFieldsThatAnnotatedByInject) {
             final Class<?> fieldClassType = field.getType();

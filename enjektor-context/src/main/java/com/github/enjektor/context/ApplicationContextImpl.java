@@ -22,14 +22,14 @@ public class ApplicationContextImpl implements ApplicationContext {
     }
 
     @Override
-    public final <T> T getBean(final Class<T> classType) throws IllegalAccessException, InstantiationException {
+    public final <T> T getBean(final Class<T> classType) throws IllegalAccessException {
         final String beanName = NamingUtils.beanCase(classType.getSimpleName());
         return getBean(classType, beanName);
     }
 
     @Override
     public final <T> T getBean(final Class<T> classType,
-                               final String fieldName) throws IllegalAccessException, InstantiationException {
+                               final String fieldName) throws IllegalAccessException {
         final Bean bean = applicationContext.get(classType);
         final Object existObject = bean.getDependency(fieldName);
 
