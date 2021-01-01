@@ -2,11 +2,13 @@ package com.github.enjektor.context.dependency.traverser;
 
 import com.github.enjektor.core.annotations.Dependencies;
 import com.github.enjektor.core.annotations.Dependency;
+import com.github.enjektor.utils.RuntimeAnnotations;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class AnnotationConfigDependencyTraverser implements DependencyTraverser {
@@ -17,12 +19,15 @@ public class AnnotationConfigDependencyTraverser implements DependencyTraverser 
         final Set<Class<?>> dependencies = new HashSet<>();
 
         for (final Class<?> dependency : scanned) {
-            final Method[] methods = dependency.getDeclaredMethods();
-            for (final Method method : methods) {
+            final Method[] declaredMethods = dependency.getDeclaredMethods();
+            for (final Method method : declaredMethods) {
                 boolean isPublic = (method.getModifiers() & Modifier.PUBLIC) != 0;
                 if (method.isAnnotationPresent(Dependency.class) && isPublic) {
                     final Class<?> returnType = method.getReturnType();
-                    final Class<? extends Constructor> aClass = returnType.getConstructors()[0].getClass();
+                    final Map<String, Object> valuesMap = new HashMap<>();
+                    valuesMap.put("name", "");
+                    RuntimeAnnotations.putAnnotation(method.getReturnType(), Dependency.class, valuesMap);
+                    dependencies.add(returnType);
                 }
             }
         }

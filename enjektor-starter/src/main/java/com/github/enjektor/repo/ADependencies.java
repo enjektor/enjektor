@@ -7,12 +7,12 @@ import com.github.enjektor.core.annotations.Dependency;
 public class ADependencies {
 
     @Dependency
-    public A a3() {
+    public A3 a3() {
         return new A3();
     }
 
     @Dependency
-    public A a4() {
+    public A4 a4() {
         return new A4();
     }
 }

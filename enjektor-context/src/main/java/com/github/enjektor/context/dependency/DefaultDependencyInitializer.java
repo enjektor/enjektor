@@ -49,12 +49,14 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
                     allClassesThatInterfaceHas.forEach(beanConsumer);
 
                     beans.add(bean);
-                } else {
-                    if (!scannedClasses.contains(dependency)) {
-                        Bean bean = new Bean();
-                        bean.register(dependency);
-                        beans.add(bean);
-                    }
+                }
+            }
+
+            for (final Class<?> singleImplementation : defaultDependencies) {
+                if (!scannedClasses.contains(singleImplementation)) {
+                    Bean bean = new Bean();
+                    bean.register(singleImplementation);
+                    beans.add(bean);
                 }
             }
 
@@ -63,7 +65,6 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
                     applicationContextMap.put(bean.getClass(), bean);
                 });
 
-            int x = 10;
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
