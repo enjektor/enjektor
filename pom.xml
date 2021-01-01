@@ -11,6 +11,7 @@
   <modules>
     <module>enjektor-core</module>
     <module>enjektor-context</module>
+    <module>enjektor-starter</module>
   </modules>
 
   <properties>
@@ -21,6 +22,7 @@
   </properties>
 
   <dependencies>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>

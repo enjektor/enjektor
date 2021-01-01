@@ -1,4 +1,4 @@
-package com.github.enjektor.context.dependency;
+package com.github.enjektor.context.bean;
 
 import com.github.enjektor.utils.NamingUtils;
 
@@ -7,9 +7,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class Dependency {
+public class Bean {
 
     private Map<String, Object> instancesOnRuntime = new HashMap<>(3);
+    private final Class<?> classType;
+
+    public Bean(final Class<?> classType) {
+        this.classType = classType;
+    }
 
     public final void register(final Class<?> classType) {
         register(classType, Optional.empty());
@@ -41,6 +46,10 @@ public class Dependency {
             return instancesOnRuntime.get(classNameHolder);
         }
         return instancesOnRuntime.get(dependencyUniqueName);
+    }
+
+    public Class<?> getClassType() {
+        return classType;
     }
 
     @Override

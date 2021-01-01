@@ -7,22 +7,14 @@
     <groupId>com.github.enjektor</groupId>
     <version>0.0.1</version>
   </parent>
-
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>enjektor-context</artifactId>
-  <version>0.0.3</version>
+  <artifactId>enjektor-starter</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>com.github.enjektor</groupId>
-      <artifactId>enjektor-core</artifactId>
-      <version>0.0.2</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.github.enjektor</groupId>
-      <artifactId>enjektor-utils</artifactId>
+      <artifactId>enjektor-context</artifactId>
       <version>0.0.1</version>
     </dependency>
   </dependencies>
