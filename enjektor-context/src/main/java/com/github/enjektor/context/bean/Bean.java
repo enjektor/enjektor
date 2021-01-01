@@ -10,6 +10,11 @@ import java.util.Set;
 public class Bean {
 
     private Map<String, Object> instancesOnRuntime = new HashMap<>(3);
+    private final Class<?> classType;
+
+    public Bean(final Class<?> classType) {
+        this.classType = classType;
+    }
 
     public final void register(final Class<?> classType) {
         register(classType, Optional.empty());
@@ -41,6 +46,10 @@ public class Bean {
             return instancesOnRuntime.get(classNameHolder);
         }
         return instancesOnRuntime.get(dependencyUniqueName);
+    }
+
+    public Class<?> getClassType() {
+        return classType;
     }
 
     @Override

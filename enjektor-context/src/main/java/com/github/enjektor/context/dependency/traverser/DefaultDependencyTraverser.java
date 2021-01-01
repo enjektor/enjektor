@@ -8,6 +8,6 @@ public class DefaultDependencyTraverser implements DependencyTraverser {
 
     @Override
     public final Set<Class<?>> traverse(final Class<?> mainClass) {
-        return scanner.scan(mainClass, Dependency.class);
+        return CLASS_SCANNER.scan(mainClass, Dependency.class);
     }
 }

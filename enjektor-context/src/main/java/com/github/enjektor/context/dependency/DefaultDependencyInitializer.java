@@ -6,7 +6,7 @@ import com.github.enjektor.context.dependency.traverser.AnnotationConfigDependen
 import com.github.enjektor.context.dependency.traverser.DefaultDependencyTraverser;
 import com.github.enjektor.context.dependency.traverser.DependencyTraverser;
 import com.github.enjektor.core.scanner.ConcreteClassScanner;
-import com.github.enjektor.core.scanner.Scanner;
+import com.github.enjektor.core.scanner.ClassScanner;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -20,7 +20,7 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
     @Override
     public void initialize(final Class<?> mainClass,
                            final Map<Class<?>, Bean> applicationContextMap) {
-        final Scanner<Object> concreteClassScanner = ConcreteClassScanner.getInstance();
+        final ClassScanner<Object> concreteClassClassScanner = ConcreteClassScanner.getInstance();
         final DependencyTraverser defaultTraverser = new DefaultDependencyTraverser();
         final DependencyTraverser annotationBasedTraverser = new AnnotationConfigDependencyTraverser();
 
@@ -41,9 +41,8 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
             for (final Class<?> dependency : defaultDependencies) {
                 if (dependency.isInterface()) {
                     scannedClasses.add(dependency);
-
-                    final Set<Class<?>> allClassesThatInterfaceHas = concreteClassScanner.scan(mainClass, dependency);
-                    final Bean bean = new Bean();
+                    final Set<Class<?>> allClassesThatInterfaceHas = concreteClassClassScanner.scan(mainClass, dependency);
+                    final Bean bean = new Bean(dependency);
 
                     final Consumer<Class<?>> beanConsumer = new BeanConsumer(bean, scannedClasses);
                     allClassesThatInterfaceHas.forEach(beanConsumer);
@@ -54,7 +53,7 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
 
             for (final Class<?> singleImplementation : defaultDependencies) {
                 if (!scannedClasses.contains(singleImplementation)) {
-                    Bean bean = new Bean();
+                    Bean bean = new Bean(singleImplementation);
                     bean.register(singleImplementation);
                     beans.add(bean);
                 }
@@ -62,10 +61,10 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
 
             beans
                 .forEach(bean -> {
-                    applicationContextMap.put(bean.getClass(), bean);
+                    applicationContextMap.put(bean.getClassType(), bean);
                 });
 
-
+            int x = 10;
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

@@ -10,7 +10,7 @@ import org.reflections.util.FilterBuilder;
 import java.lang.annotation.Annotation;
 import java.util.Set;
 
-public class AnnotationScanner implements Scanner<Annotation> {
+public class AnnotationScanner implements ClassScanner<Annotation> {
 
     private static AnnotationScanner instance = null;
 
@@ -27,7 +27,7 @@ public class AnnotationScanner implements Scanner<Annotation> {
         return reflections.getTypesAnnotatedWith(annotation);
     }
 
-    public static Scanner getInstance() {
+    public static ClassScanner getInstance() {
         if (instance == null) instance = new AnnotationScanner();
         return instance;
     }

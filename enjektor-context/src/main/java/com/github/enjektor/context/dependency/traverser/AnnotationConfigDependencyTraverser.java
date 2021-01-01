@@ -15,7 +15,7 @@ public class AnnotationConfigDependencyTraverser implements DependencyTraverser 
 
     @Override
     public final Set<Class<?>> traverse(final Class<?> mainClass) {
-        final Set<Class<?>> scanned = scanner.scan(mainClass, Dependencies.class);
+        final Set<Class<?>> scanned = CLASS_SCANNER.scan(mainClass, Dependencies.class);
         final Set<Class<?>> dependencies = new HashSet<>();
 
         for (final Class<?> dependency : scanned) {
@@ -26,7 +26,7 @@ public class AnnotationConfigDependencyTraverser implements DependencyTraverser 
                     final Class<?> returnType = method.getReturnType();
                     final Map<String, Object> valuesMap = new HashMap<>();
                     valuesMap.put("name", "");
-                    RuntimeAnnotations.putAnnotation(method.getReturnType(), Dependency.class, valuesMap);
+                    RuntimeAnnotations.putAnnotation(returnType, Dependency.class, valuesMap);
                     dependencies.add(returnType);
                 }
             }

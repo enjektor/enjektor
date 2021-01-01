@@ -9,7 +9,7 @@ import org.reflections.util.FilterBuilder;
 
 import java.util.Set;
 
-public class ConcreteClassScanner implements Scanner<Object> {
+public class ConcreteClassScanner implements ClassScanner<Object> {
 
     private static ConcreteClassScanner concreteClassScanner = null;
 
