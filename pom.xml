@@ -25,7 +25,7 @@
     <!-- sub module versions -->
     <enjektor.context.version>0.0.4</enjektor.context.version>
     <enjektor.utils.version>0.0.2</enjektor.utils.version>
-    <enjektor.core.version>${global.version}</enjektor.core.version>
+    <enjektor.core.version>0.0.3</enjektor.core.version>
     <enjektor.starter.version>0.0.1</enjektor.starter.version>
   </properties>
 
