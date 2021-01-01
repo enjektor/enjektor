@@ -1,4 +1,4 @@
-package com.github.enjektor.context.dependency;
+package com.github.enjektor.context.bean;
 
 import com.github.enjektor.utils.NamingUtils;
 
@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class Dependency {
+public class Bean {
 
     private Map<String, Object> instancesOnRuntime = new HashMap<>(3);
 

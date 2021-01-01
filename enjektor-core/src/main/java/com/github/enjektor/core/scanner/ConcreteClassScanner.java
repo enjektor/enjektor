@@ -9,13 +9,18 @@ import org.reflections.util.FilterBuilder;
 
 import java.util.Set;
 
-public class InterfaceScannerImpl implements InterfaceScanner {
+public class ConcreteClassScanner implements Scanner<Object> {
 
-    private static InterfaceScannerImpl interfaceScannerImpl = null;
+    private static ConcreteClassScanner concreteClassScanner = null;
+
+    public static ConcreteClassScanner getInstance() {
+        if (concreteClassScanner == null) concreteClassScanner = new ConcreteClassScanner();
+        return concreteClassScanner;
+    }
 
     @Override
-    public final Set<Class<?>> scanConcreteClasses(final Class<?> mainClass,
-                                                   final Class<?> interfaceClass) {
+    public final Set<Class<?>> scan(final Class<?> mainClass,
+                                    final Class<?> interfaceClass) {
         final String packageName = mainClass.getPackage().getName();
         final ConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
             .setScanners(new SubTypesScanner(false), new ResourcesScanner())
@@ -24,10 +29,5 @@ public class InterfaceScannerImpl implements InterfaceScanner {
 
         final Reflections reflections = new Reflections(configurationBuilder);
         return reflections.getSubTypesOf((Class<Object>) interfaceClass);
-    }
-
-    public static InterfaceScannerImpl getInstance() {
-        if (interfaceScannerImpl == null) interfaceScannerImpl = new InterfaceScannerImpl();
-        return interfaceScannerImpl;
     }
 }
