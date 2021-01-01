@@ -5,13 +5,17 @@
   <parent>
     <artifactId>enjektor</artifactId>
     <groupId>com.github.enjektor</groupId>
-    <version>0.0.1</version>
+    <version>${global.version}</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>enjektor-core</artifactId>
-  <version>0.0.2</version>
+  <version>${enjektor.core.version}</version>
+
+  <properties>
+    <maven.deploy.skip>false</maven.deploy.skip>
+  </properties>
 
   <dependencies>
     <dependency>

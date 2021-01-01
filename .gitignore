@@ -1,6 +1,7 @@
 .idea/*
 HELP.md
 
+**/.flattened-pom.xml
 
 **target/
 !.mvn/wrapper/maven-wrapper.jar
