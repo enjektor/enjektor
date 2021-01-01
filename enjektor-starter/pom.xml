@@ -7,13 +7,20 @@
     <groupId>com.github.enjektor</groupId>
     <version>${global.version}</version>
   </parent>
-
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>enjektor-utils</artifactId>
-  <version>${enjektor.utils.version}</version>
+
+  <artifactId>enjektor-starter</artifactId>
+  <version>${enjektor.starter.version}</version>
 
   <properties>
-    <maven.deploy.skip>false</maven.deploy.skip>
+    <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.enjektor</groupId>
+      <artifactId>enjektor-context</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>

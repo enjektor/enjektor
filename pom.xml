@@ -6,11 +6,13 @@
   <groupId>com.github.enjektor</groupId>
   <artifactId>enjektor</artifactId>
   <packaging>pom</packaging>
-  <version>0.0.1</version>
+  <version>${global.version}</version>
 
   <modules>
     <module>enjektor-core</module>
     <module>enjektor-context</module>
+    <module>enjektor-starter</module>
+    <module>enjektor-utils</module>
   </modules>
 
   <properties>
@@ -18,22 +20,69 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>5.6.0</junit.version>
+    <global.version>0.0.4</global.version>
+
+    <!-- sub module versions -->
+    <enjektor.context.version>0.0.4</enjektor.context.version>
+    <enjektor.utils.version>0.0.2</enjektor.utils.version>
+    <enjektor.core.version>0.0.3</enjektor.core.version>
+    <enjektor.starter.version>0.0.1</enjektor.starter.version>
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+  <name>Enjektor</name>
+  <description>Enjektor is an application framework and inversion of control container for the Java platform.</description>
+  <url>https://github.com/enjektor/enjektor</url>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Enes Usta</name>
+      <email>enesusta@protonmail.com</email>
+      <organization>com.github.enjektor</organization>
+      <organizationUrl>https://github.com/enjektor</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/enjektor/enjektor.git</connection>
+    <developerConnection>scm:git:ssh://github.com/enjektor/enjektor.git</developerConnection>
+    <url>https://github.com/enjektor/enjektor</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.github.enjektor</groupId>
+        <artifactId>enjektor-core</artifactId>
+        <version>${enjektor.core.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.enjektor</groupId>
+        <artifactId>enjektor-utils</artifactId>
+        <version>${enjektor.utils.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.enjektor</groupId>
+        <artifactId>enjektor-context</artifactId>
+        <version>${enjektor.context.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.enjektor</groupId>
+        <artifactId>enjektor-starter</artifactId>
+        <version>${enjektor.starter.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <plugins>
@@ -54,7 +103,150 @@
         <version>2.22.2</version>
       </plugin>
 
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
+        <executions>
+          <execution>
+            <id>default-deploy</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
+        <configuration>
+          <localCheckout>true</localCheckout>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>release</releaseProfiles>
+          <pushChanges>false</pushChanges>
+          <mavenExecutorId>forked-path</mavenExecutorId>
+        </configuration>
+
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <use>false</use>
+              <use>false</use>
+              <source>1.8</source>
+              <links>
+                <link>http://docs.oracle.com/javase/7/docs/api/</link>
+                <link>http://docs.oracle.com/javase/7/docs/api/</link>
+              </links>
+              <doclint>none</doclint>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>1.1.0</version>
+        <configuration>
+          <updatePomFile>true</updatePomFile>
+          <flattenMode>resolveCiFriendliesOnly</flattenMode>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
+
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
 
 </project>
