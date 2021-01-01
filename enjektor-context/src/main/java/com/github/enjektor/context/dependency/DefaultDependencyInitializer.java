@@ -58,9 +58,12 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
                 }
             }
 
-            beans.forEach(bean -> {
-                applicationContextMap.put(bean.getClass(), bean);
-            });
+            beans
+                .forEach(bean -> {
+                    applicationContextMap.put(bean.getClass(), bean);
+                });
+
+            int x = 10;
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

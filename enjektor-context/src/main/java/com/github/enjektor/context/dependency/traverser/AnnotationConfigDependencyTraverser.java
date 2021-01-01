@@ -3,27 +3,13 @@ package com.github.enjektor.context.dependency.traverser;
 import com.github.enjektor.core.annotations.Dependencies;
 import com.github.enjektor.core.annotations.Dependency;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.Set;
 
 public class AnnotationConfigDependencyTraverser implements DependencyTraverser {
-
-    @Dependencies
-    static class ExampleDependencies {
-
-        @Dependency
-        public String name() {
-            return "string";
-        }
-
-        @Dependency
-        public int seedNumb() {
-            return 32;
-        }
-
-    }
-
 
     @Override
     public final Set<Class<?>> traverse(final Class<?> mainClass) {
@@ -31,9 +17,12 @@ public class AnnotationConfigDependencyTraverser implements DependencyTraverser 
         final Set<Class<?>> dependencies = new HashSet<>();
 
         for (final Class<?> dependency : scanned) {
-            for (final Field field : dependency.getDeclaredFields()) {
-                if (field.isAnnotationPresent(Dependency.class)) {
-                    dependencies.add(field.getType());
+            final Method[] methods = dependency.getDeclaredMethods();
+            for (final Method method : methods) {
+                boolean isPublic = (method.getModifiers() & Modifier.PUBLIC) != 0;
+                if (method.isAnnotationPresent(Dependency.class) && isPublic) {
+                    final Class<?> returnType = method.getReturnType();
+                    final Class<? extends Constructor> aClass = returnType.getConstructors()[0].getClass();
                 }
             }
         }
