@@ -1,4 +1,4 @@
-package com.github.enjektor.context.autowire;
+package com.github.enjektor.context.injector;
 
 import com.github.enjektor.context.bean.Bean;
 import com.github.enjektor.core.annotations.Qualifier;
@@ -10,19 +10,23 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Set;
 
-public class BasicAutowireMechanism implements AutowireMechanism {
+public class RecursiveInjector implements Injector {
 
     private final static FieldScanner fieldScanner = new FieldScannerImpl();
+    private final Map<Class<?>, Bean> beanHolderMap;
+
+    public RecursiveInjector(Map<Class<?>, Bean> beanHolderMap) {
+        this.beanHolderMap = beanHolderMap;
+    }
 
     @Override
-    public final void autowire(final Object object,
-                               final Map<Class<?>, Bean> applicationContext) throws IllegalAccessException {
+    public final void inject(final Object object) throws IllegalAccessException {
         final Set<Field> allFieldsThatAnnotatedByInject = fieldScanner.scan(object.getClass());
         if (allFieldsThatAnnotatedByInject.size() == 0) return;
 
         for (final Field field : allFieldsThatAnnotatedByInject) {
             final Class<?> fieldClassType = field.getType();
-            final Bean bean = applicationContext.get(fieldClassType);
+            final Bean bean = beanHolderMap.get(fieldClassType);
 
             field.setAccessible(true);
             if (fieldClassType.isInterface()) {
@@ -30,17 +34,17 @@ public class BasicAutowireMechanism implements AutowireMechanism {
                     final Qualifier qualifier = field.getAnnotation(Qualifier.class);
                     final Object beanInstance = bean.getDependency(qualifier.value());
                     field.set(object, beanInstance);
-                    autowire(beanInstance, applicationContext);
+                    inject(beanInstance);
                 } else {
                     final Object beanInstance = bean.getDependency("");
                     field.set(object, beanInstance);
-                    autowire(beanInstance, applicationContext);
+                    inject(beanInstance);
                 }
             } else {
                 final String beanName = NamingUtils.beanCase(fieldClassType.getSimpleName());
                 final Object beanInstance = bean.getDependency(beanName);
                 field.set(object, beanInstance);
-                autowire(beanInstance, applicationContext);
+                inject(beanInstance);
             }
         }
     }

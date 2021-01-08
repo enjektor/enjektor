@@ -52,6 +52,10 @@ public class Bean {
         return classType;
     }
 
+    public Map<String, Object> getInstancesOnRuntime() {
+        return instancesOnRuntime;
+    }
+
     @Override
     public String toString() {
         return "Dependency{" +
