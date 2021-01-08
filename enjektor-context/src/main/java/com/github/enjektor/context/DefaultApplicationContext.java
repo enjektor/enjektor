@@ -11,32 +11,25 @@ import java.util.Map;
 
 public class DefaultApplicationContext implements ApplicationContext {
 
-    private final Class<?> mainClass;
     private final Map<Class<?>, Bean> applicationContextMap;
-    private final DependencyInitializer dependencyInitializer;
     private final Injector recursiveInjector;
 
     public DefaultApplicationContext(final Class<?> mainClass,
                                      final Map<Class<?>, Bean> applicationContextMap) {
         this.applicationContextMap = applicationContextMap;
-        this.mainClass = mainClass;
-        dependencyInitializer = new DefaultDependencyInitializer(applicationContextMap);
         recursiveInjector = new RecursiveInjector(applicationContextMap);
-        initialize();
-    }
-
-    private void initialize() {
+        final DependencyInitializer dependencyInitializer = new DefaultDependencyInitializer(applicationContextMap);
         dependencyInitializer.initialize(mainClass);
     }
 
     @Override
-    public <T> T getBean(Class<T> classType) throws IllegalAccessException, InstantiationException {
+    public <T> T getBean(final Class<T> classType) throws IllegalAccessException, InstantiationException {
         final String beanName = NamingUtils.beanCase(classType.getSimpleName());
         return getBean(classType, beanName);
     }
 
     @Override
-    public <T> T getBean(Class<T> classType, String fieldName) throws IllegalAccessException, InstantiationException {
+    public <T> T getBean(final Class<T> classType, final String fieldName) throws IllegalAccessException, InstantiationException {
         final Bean bean = applicationContextMap.get(classType);
         final Object existObject = bean.getDependency(fieldName);
 

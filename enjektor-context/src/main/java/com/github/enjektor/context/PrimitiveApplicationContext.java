@@ -10,11 +10,10 @@ import java.util.function.BiConsumer;
 
 public class PrimitiveApplicationContext implements ApplicationContext {
 
-    private static PrimitiveApplicationContext instance;
     private final Map<Class<?>, Bean> applicationContext = new HashMap<>();
     private final ApplicationContext defaultApplicationContext;
 
-    private PrimitiveApplicationContext(final Class<?> mainClass) {
+    public PrimitiveApplicationContext(final Class<?> mainClass) {
         defaultApplicationContext = new DefaultApplicationContext(mainClass, applicationContext);
         initialize();
     }
@@ -31,11 +30,6 @@ public class PrimitiveApplicationContext implements ApplicationContext {
         final Bean bean = applicationContext.get(classType);
         final Object existObject = bean.getDependency(fieldName);
         return (T) existObject;
-    }
-
-    public static ApplicationContext getInstance(final Class<?> mainClass) {
-        if (instance == null) instance = new PrimitiveApplicationContext(mainClass);
-        return instance;
     }
 
     private void initialize() {
