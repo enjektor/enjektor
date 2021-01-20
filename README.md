@@ -11,7 +11,7 @@ Add as parent to your pom.xml;
 <parent>
     <groupId>com.github.enjektor</groupId>
     <artifactId>enjektor</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
 </parent>
 ```
 
@@ -22,11 +22,6 @@ Dependencies that you need to use to enjektor:
         <dependency>
             <groupId>com.github.enjektor</groupId>
             <artifactId>enjektor-context</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.enjektor</groupId>
-            <artifactId>enjektor-utils</artifactId>
         </dependency>
 </dependencies>
 ```
