@@ -1,7 +1,7 @@
 package com.github.enjektor.context.dependency;
 
 import com.github.enjektor.context.bean.Bean;
-import com.github.enjektor.context.bean.BeanConsumer;
+import com.github.enjektor.context.consumer.BeanConsumer;
 import com.github.enjektor.context.dependency.traverser.AnnotationConfigDependencyTraverser;
 import com.github.enjektor.context.dependency.traverser.DefaultDependencyTraverser;
 import com.github.enjektor.context.dependency.traverser.DependencyTraverser;
@@ -17,9 +17,14 @@ import java.util.function.Consumer;
 
 public class DefaultDependencyInitializer implements DependencyInitializer {
 
+    private final Map<Class<?>, Bean> applicationContext;
+
+    public DefaultDependencyInitializer(final Map<Class<?>, Bean> applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
     @Override
-    public void initialize(final Class<?> mainClass,
-                           final Map<Class<?>, Bean> applicationContextMap) {
+    public void initialize(final Class<?> mainClass) {
         final ClassScanner<Object> concreteClassClassScanner = ConcreteClassScanner.getInstance();
         final DependencyTraverser defaultTraverser = new DefaultDependencyTraverser();
         final DependencyTraverser annotationBasedTraverser = new AnnotationConfigDependencyTraverser();
@@ -61,7 +66,7 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
 
             beans
                 .forEach(bean -> {
-                    applicationContextMap.put(bean.getClassType(), bean);
+                    applicationContext.put(bean.getClassType(), bean);
                 });
 
         } catch (InterruptedException | ExecutionException e) {

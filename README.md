@@ -11,7 +11,7 @@ Add as parent to your pom.xml;
 <parent>
     <groupId>com.github.enjektor</groupId>
     <artifactId>enjektor</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
 </parent>
 ```
 
@@ -22,11 +22,6 @@ Dependencies that you need to use to enjektor:
         <dependency>
             <groupId>com.github.enjektor</groupId>
             <artifactId>enjektor-context</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.enjektor</groupId>
-            <artifactId>enjektor-utils</artifactId>
         </dependency>
 </dependencies>
 ```
@@ -74,7 +69,7 @@ Enjektor creates your dependencies automatically. All you need to know is that y
 
 ```java
 import com.github.enjektor.context.ApplicationContext;
-import com.github.enjektor.context.ApplicationContextImpl;
+import com.github.enjektor.context.PrimitiveApplicationContext;
 
 public class Main {
     public static void main(String[] args) throws InstantiationException, IllegalAccessException {
@@ -110,9 +105,9 @@ import com.github.enjektor.core.annotations.Dependency;
 public class StringUtils {
 
     public String upperCase() {
-        throw new UnsupportedOperationException(); 
+        throw new UnsupportedOperationException();
     }
-    
+
     public String lowerCase() {
         throw new UnsupportedOperationException();
     }
@@ -183,7 +178,7 @@ public class SessionMiddleware implements Middleware {
 
 Let's assume that you need token middleware to secure your endpoints in your microservices.
 
-You can do it in two ways using enjektor: 
+You can do it in two ways using enjektor:
 
 #### Default Bean Name
 
@@ -191,7 +186,7 @@ You can do it in two ways using enjektor:
 package com.github.enjektor.tutorial;
 
 import com.github.enjektor.context.ApplicationContext;
-import com.github.enjektor.context.ApplicationContextImpl;
+import com.github.enjektor.context.PrimitiveApplicationContext;
 
 public class Main {
     public static void main(String[] args) throws InstantiationException, IllegalAccessException {
@@ -242,7 +237,7 @@ public class TokenMiddleware implements Middleware {
 package com.github.enjektor.tutorial;
 
 import com.github.enjektor.context.ApplicationContext;
-import com.github.enjektor.context.ApplicationContextImpl;
+import com.github.enjektor.context.PrimitiveApplicationContext;
 
 public class Main {
     public static void main(String[] args) throws InstantiationException, IllegalAccessException {

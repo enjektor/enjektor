@@ -1,5 +1,6 @@
-package com.github.enjektor.context.bean;
+package com.github.enjektor.context.consumer;
 
+import com.github.enjektor.context.bean.Bean;
 import com.github.enjektor.core.annotations.Dependency;
 
 import java.util.Set;
