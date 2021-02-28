@@ -2,20 +2,27 @@ package com.github.enjektor.context;
 
 import com.github.enjektor.context.bean.Bean;
 import com.github.enjektor.context.consumer.BeanInstantiateBiConsumer;
+import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.utils.NamingUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class PrimitiveApplicationContext implements ApplicationContext {
 
-    private final Map<Class<?>, Bean> applicationContext = new HashMap<>();
+    private final Map<Class<?>, Bean> beanHashMap = new HashMap<>();
     private final ApplicationContext defaultApplicationContext;
 
-    public PrimitiveApplicationContext(final Class<?> mainClass) {
-        defaultApplicationContext = new DefaultApplicationContext(mainClass, applicationContext);
-        initialize();
+    public PrimitiveApplicationContext(final Class<?> mainClass, final List<DependencyInitializer> dependencyInitializers) {
+        this.defaultApplicationContext = new DefaultApplicationContext(mainClass, beanHashMap, dependencyInitializers);
+        init();
+    }
+
+    private void init() {
+        final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(defaultApplicationContext);
+        beanHashMap.forEach(beanBiConsumer);
     }
 
     @Override
@@ -27,14 +34,9 @@ public class PrimitiveApplicationContext implements ApplicationContext {
     @Override
     public final <T> T getBean(final Class<T> classType,
                                final String fieldName) throws IllegalAccessException {
-        final Bean bean = applicationContext.get(classType);
+        final Bean bean = beanHashMap.get(classType);
         final Object existObject = bean.getDependency(fieldName);
         return (T) existObject;
-    }
-
-    private void initialize() {
-        final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(defaultApplicationContext);
-        applicationContext.forEach(beanBiConsumer);
     }
 
 }
