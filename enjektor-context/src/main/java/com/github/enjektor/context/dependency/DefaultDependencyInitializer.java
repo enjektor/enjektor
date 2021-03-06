@@ -17,14 +17,9 @@ import java.util.function.Consumer;
 
 public class DefaultDependencyInitializer implements DependencyInitializer {
 
-    private final Map<Class<?>, Bean> applicationContext;
-
-    public DefaultDependencyInitializer(final Map<Class<?>, Bean> applicationContext) {
-        this.applicationContext = applicationContext;
-    }
-
     @Override
-    public void initialize(final Class<?> mainClass) {
+    public Map<Class<?>, Bean> initialize(final Class<?> mainClass) {
+        final Map<Class<?>, Bean> applicationContext = new HashMap<>();
         final ClassScanner<Object> concreteClassClassScanner = ConcreteClassScanner.getInstance();
         final DependencyTraverser defaultTraverser = new DefaultDependencyTraverser();
         final DependencyTraverser annotationBasedTraverser = new AnnotationConfigDependencyTraverser();
@@ -74,5 +69,6 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
         }
 
         executorService.shutdown();
+        return applicationContext;
     }
 }
