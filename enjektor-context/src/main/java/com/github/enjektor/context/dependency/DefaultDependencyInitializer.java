@@ -19,7 +19,7 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
 
     @Override
     public Map<Class<?>, Bean> initialize(final Class<?> mainClass) {
-        final Map<Class<?>, Bean> applicationContext = new HashMap<>();
+        final Map<Class<?>, Bean> applicationContext = new WeakHashMap<>();
         final ClassScanner<Object> concreteClassClassScanner = ConcreteClassScanner.getInstance();
         final DependencyTraverser defaultTraverser = new DefaultDependencyTraverser();
         final DependencyTraverser annotationBasedTraverser = new AnnotationConfigDependencyTraverser();
@@ -59,10 +59,7 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
                 }
             }
 
-            beans
-                .forEach(bean -> {
-                    applicationContext.put(bean.getClassType(), bean);
-                });
+            for (Bean bean : beans) applicationContext.put(bean.getClassType(), bean);
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

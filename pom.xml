@@ -23,9 +23,9 @@
     <global.version>0.0.5</global.version>
 
     <!-- sub module versions -->
-    <enjektor.context.version>0.0.5.1</enjektor.context.version>
+    <enjektor.context.version>0.0.5.2</enjektor.context.version>
     <enjektor.utils.version>0.0.2</enjektor.utils.version>
-    <enjektor.core.version>0.0.3.1</enjektor.core.version>
+    <enjektor.core.version>0.0.3.2</enjektor.core.version>
     <enjektor.starter.version>0.0.1</enjektor.starter.version>
   </properties>
 
@@ -83,6 +83,14 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>net.sf.trove4j</groupId>
+      <artifactId>trove4j</artifactId>
+      <version>3.0.3</version>
+    </dependency>
+  </dependencies>
 
   <build>
     <plugins>

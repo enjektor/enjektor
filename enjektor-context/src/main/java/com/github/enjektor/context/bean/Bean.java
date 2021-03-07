@@ -1,7 +1,10 @@
 package com.github.enjektor.context.bean;
 
 import com.github.enjektor.utils.NamingUtils;
+import sun.reflect.ReflectionFactory;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -9,7 +12,7 @@ import java.util.Set;
 
 public class Bean {
 
-    private Map<String, Object> instancesOnRuntime = new HashMap<>(3);
+    private final Map<String, Object> instancesOnRuntime = new HashMap<>(3);
     private final Class<?> classType;
 
     public Bean(final Class<?> classType) {
@@ -28,12 +31,18 @@ public class Bean {
     public final void register(final Class<?> classType,
                                final Optional<String> dependencyNameOpt) {
         try {
-            final Object implementationInstance = classType.newInstance();
+            final ReflectionFactory reflectionFactory = ReflectionFactory.getReflectionFactory();
+            final Constructor<?> constructor = reflectionFactory.newConstructorForSerialization(classType, Object.class.getDeclaredConstructor(new Class[0]));
+            final Object implementationInstance = constructor.newInstance(new Object[0]);
             final String simpleClassName = NamingUtils.beanCase(classType.getSimpleName());
             final String className = dependencyNameOpt.orElse(simpleClassName);
             instancesOnRuntime.put(className, implementationInstance);
         } catch (InstantiationException | IllegalAccessException e) {
             // TODO: add sl4fj
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
     }
