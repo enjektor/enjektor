@@ -38,8 +38,20 @@ public class BeanInstantiateBiConsumer implements BiConsumer<Class<?>, Bean>, Be
     public void manage(Object object,
                        Field field) throws IllegalAccessException, InstantiationException {
         final Class<?> type = field.getType();
+        final int modifier = field.getModifiers();
 
         field.setAccessible(true);
+        if (modifier == 18) {
+            if (field.isAnnotationPresent(Qualifier.class)) {
+                final Qualifier qualifier = field.getAnnotation(Qualifier.class);
+                final Object fieldInstance = applicationContext.getBean(type, qualifier.value());
+                field.set(object, fieldInstance);
+            } else {
+                final Object fieldInstance = applicationContext.getBean(type);
+                field.set(object, fieldInstance);
+            }
+        }
+
         if (field.isAnnotationPresent(Inject.class)) {
             if (field.isAnnotationPresent(Qualifier.class)) {
                 final Qualifier qualifier = field.getAnnotation(Qualifier.class);
@@ -50,5 +62,5 @@ public class BeanInstantiateBiConsumer implements BiConsumer<Class<?>, Bean>, Be
                 field.set(object, fieldInstance);
             }
         }
-   }
+    }
 }

@@ -3,7 +3,7 @@ package com.github.enjektor.context;
 import com.github.enjektor.context.bean.Bean;
 import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.context.injector.Injector;
-import com.github.enjektor.context.injector.RecursiveInjector;
+import com.github.enjektor.context.injector.RecursiveConstructorInjector;
 import com.github.enjektor.utils.NamingUtils;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class DefaultApplicationContext implements ApplicationContext {
                                      final Map<Class<?>, Bean> beanHashMap,
                                      final List<DependencyInitializer> dependencyInitializers) {
         this.beanHashMap = beanHashMap;
-        this.recursiveInjector = new RecursiveInjector(beanHashMap);
+        this.recursiveInjector = new RecursiveConstructorInjector(beanHashMap);
         this.dependencyInitializers = dependencyInitializers;
         init(mainClass);
     }
@@ -31,13 +31,13 @@ public class DefaultApplicationContext implements ApplicationContext {
     }
 
     @Override
-    public <T> T getBean(final Class<T> classType) throws IllegalAccessException, InstantiationException {
+    public <T> T getBean(final Class<T> classType) throws IllegalAccessException {
         final String beanName = NamingUtils.beanCase(classType.getSimpleName());
         return getBean(classType, beanName);
     }
 
     @Override
-    public <T> T getBean(final Class<T> classType, final String fieldName) throws IllegalAccessException, InstantiationException {
+    public <T> T getBean(final Class<T> classType, final String fieldName) throws IllegalAccessException {
         final Bean bean = beanHashMap.get(classType);
         final Object existObject = bean.getDependency(fieldName);
 

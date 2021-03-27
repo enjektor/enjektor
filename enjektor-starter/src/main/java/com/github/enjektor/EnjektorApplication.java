@@ -4,7 +4,7 @@ import com.github.enjektor.context.ApplicationContext;
 import com.github.enjektor.context.PrimitiveApplicationContext;
 import com.github.enjektor.context.dependency.DefaultDependencyInitializer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
-import com.github.enjektor.repo.A;
+import com.github.enjektor.tutorial.Util;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +17,7 @@ public class EnjektorApplication {
 
         final ApplicationContext applicationContext = new PrimitiveApplicationContext(EnjektorApplication.class, dependencyInitializers);
 
-        final A a4 = applicationContext.getBean(A.class, "a4");
-        System.out.println(a4.a());
+        final Util bean = applicationContext.getBean(Util.class);
+        bean.invoke();
     }
 }

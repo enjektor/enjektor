@@ -21,6 +21,11 @@
       <groupId>com.github.enjektor</groupId>
       <artifactId>enjektor-context</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.14</version>
+    </dependency>
   </dependencies>
 
 </project>
