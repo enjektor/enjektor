@@ -1,17 +1,15 @@
-package com.github.enjektor.core.scanner;
+package com.github.enjektor.core.scanner.field;
 
 import com.github.enjektor.core.annotations.Inject;
+import gnu.trove.set.hash.THashSet;
 
 import java.lang.reflect.Field;
-import java.util.HashSet;
-import java.util.Set;
 
-public class FieldScannerImpl implements FieldScanner {
+public class InjectAnnotationFieldScanner implements FieldScanner {
 
     @Override
-    public final Set<Field> scan(final Class<?> dependency) {
-
-        final Set<Field> injectedFields = new HashSet<>(3);
+    public final THashSet<Field> scan(final Class<?> dependency) {
+        final THashSet<Field> injectedFields = new THashSet<>(3);
         final Field[] fields = dependency.getDeclaredFields();
         for (final Field field : fields)
             if (field.isAnnotationPresent(Inject.class))

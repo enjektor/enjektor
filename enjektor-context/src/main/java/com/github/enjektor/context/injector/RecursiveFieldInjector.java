@@ -2,20 +2,20 @@ package com.github.enjektor.context.injector;
 
 import com.github.enjektor.context.bean.Bean;
 import com.github.enjektor.core.annotations.Qualifier;
-import com.github.enjektor.core.scanner.FieldScanner;
-import com.github.enjektor.core.scanner.FieldScannerImpl;
+import com.github.enjektor.core.scanner.field.FieldScanner;
+import com.github.enjektor.core.scanner.field.InjectAnnotationFieldScanner;
 import com.github.enjektor.utils.NamingUtils;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Set;
 
-public class RecursiveInjector implements Injector {
+public class RecursiveFieldInjector implements Injector {
 
-    private final static FieldScanner fieldScanner = new FieldScannerImpl();
+    private static final FieldScanner fieldScanner = new InjectAnnotationFieldScanner();
     private final Map<Class<?>, Bean> beanHolderMap;
 
-    public RecursiveInjector(Map<Class<?>, Bean> beanHolderMap) {
+    public RecursiveFieldInjector(Map<Class<?>, Bean> beanHolderMap) {
         this.beanHolderMap = beanHolderMap;
     }
 

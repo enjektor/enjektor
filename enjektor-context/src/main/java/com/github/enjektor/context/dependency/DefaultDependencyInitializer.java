@@ -8,7 +8,12 @@ import com.github.enjektor.context.dependency.traverser.DependencyTraverser;
 import com.github.enjektor.core.scanner.ConcreteClassScanner;
 import com.github.enjektor.core.scanner.ClassScanner;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -19,7 +24,7 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
 
     @Override
     public Map<Class<?>, Bean> initialize(final Class<?> mainClass) {
-        final Map<Class<?>, Bean> applicationContext = new HashMap<>();
+        final Map<Class<?>, Bean> applicationContext = new WeakHashMap<>();
         final ClassScanner<Object> concreteClassClassScanner = ConcreteClassScanner.getInstance();
         final DependencyTraverser defaultTraverser = new DefaultDependencyTraverser();
         final DependencyTraverser annotationBasedTraverser = new AnnotationConfigDependencyTraverser();
@@ -59,10 +64,7 @@ public class DefaultDependencyInitializer implements DependencyInitializer {
                 }
             }
 
-            beans
-                .forEach(bean -> {
-                    applicationContext.put(bean.getClassType(), bean);
-                });
+            for (Bean bean : beans) applicationContext.put(bean.getClassType(), bean);
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

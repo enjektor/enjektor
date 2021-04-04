@@ -27,7 +27,7 @@ public class AnnotationScanner implements ClassScanner<Annotation> {
         return reflections.getTypesAnnotatedWith(annotation);
     }
 
-    public static ClassScanner getInstance() {
+    public static ClassScanner<Annotation> getInstance() {
         if (instance == null) instance = new AnnotationScanner();
         return instance;
     }

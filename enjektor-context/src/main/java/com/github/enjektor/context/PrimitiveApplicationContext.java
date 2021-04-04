@@ -3,26 +3,34 @@ package com.github.enjektor.context;
 import com.github.enjektor.context.bean.Bean;
 import com.github.enjektor.context.consumer.BeanInstantiateBiConsumer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
+import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.utils.NamingUtils;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.function.BiConsumer;
 
-public class PrimitiveApplicationContext implements ApplicationContext {
+public class PrimitiveApplicationContext implements ApplicationContext, DeAllocationHandler {
 
-    private final Map<Class<?>, Bean> beanHashMap = new HashMap<>();
-    private final ApplicationContext defaultApplicationContext;
+    private Map<Class<?>, Bean> beanHashMap = new WeakHashMap<>();
+    private ApplicationContext applicationContext;
 
-    public PrimitiveApplicationContext(final Class<?> mainClass, final List<DependencyInitializer> dependencyInitializers) {
-        this.defaultApplicationContext = new DefaultApplicationContext(mainClass, beanHashMap, dependencyInitializers);
+    public PrimitiveApplicationContext(final Class<?> mainClass,
+                                       final List<DependencyInitializer> dependencyInitializers) {
+        this.applicationContext = new DefaultApplicationContext(mainClass, beanHashMap, dependencyInitializers);
         init();
     }
 
-    private void init() {
-        final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(defaultApplicationContext);
+    @Override
+    public void init() {
+        final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(applicationContext);
         beanHashMap.forEach(beanBiConsumer);
+    }
+
+    @Override
+    public void destroy() {
+        clean();
     }
 
     @Override
@@ -39,4 +47,11 @@ public class PrimitiveApplicationContext implements ApplicationContext {
         return (T) existObject;
     }
 
+    @Override
+    public void clean() {
+        applicationContext.destroy();
+        applicationContext = null;
+        beanHashMap.forEach((k, ignored) -> k = null);
+        beanHashMap = null;
+    }
 }
