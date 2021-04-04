@@ -12,7 +12,7 @@ import java.util.List;
 
 public class EnjektorApplication {
 
-    public static void main(String[] args) throws InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public static void main(String[] args) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InterruptedException {
         final DependencyInitializer dependencyInitializer = new DefaultDependencyInitializer();
         final List<DependencyInitializer> dependencyInitializers = Collections.singletonList(dependencyInitializer);
 
@@ -24,5 +24,9 @@ public class EnjektorApplication {
         System.out.println("declaredConstructor = " + declaredConstructor);
 
         bean.invoke();
+
+        applicationContext.destroy();
+        System.gc();
+        System.runFinalization();
     }
 }

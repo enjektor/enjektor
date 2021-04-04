@@ -2,6 +2,7 @@ package com.github.enjektor.context;
 
 import com.github.enjektor.context.bean.Bean;
 import com.github.enjektor.context.dependency.DependencyInitializer;
+import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.context.injector.Injector;
 import com.github.enjektor.context.injector.RecursiveConstructorInjector;
 import com.github.enjektor.utils.NamingUtils;
@@ -9,11 +10,11 @@ import com.github.enjektor.utils.NamingUtils;
 import java.util.List;
 import java.util.Map;
 
-public class DefaultApplicationContext implements ApplicationContext {
+public class DefaultApplicationContext implements ApplicationContext, DeAllocationHandler {
 
     private final Map<Class<?>, Bean> beanHashMap;
-    private final Injector recursiveInjector;
-    private final List<DependencyInitializer> dependencyInitializers;
+    private Injector recursiveInjector;
+    private List<DependencyInitializer> dependencyInitializers;
 
     public DefaultApplicationContext(final Class<?> mainClass,
                                      final Map<Class<?>, Bean> beanHashMap,
@@ -31,6 +32,16 @@ public class DefaultApplicationContext implements ApplicationContext {
     }
 
     @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void destroy() {
+        clean();
+    }
+
+    @Override
     public <T> T getBean(final Class<T> classType) throws IllegalAccessException {
         final String beanName = NamingUtils.beanCase(classType.getSimpleName());
         return getBean(classType, beanName);
@@ -45,4 +56,9 @@ public class DefaultApplicationContext implements ApplicationContext {
         return (T) existObject;
     }
 
+    @Override
+    public void clean() {
+        recursiveInjector = null;
+        dependencyInitializers = null;
+    }
 }
