@@ -8,7 +8,12 @@ import com.github.enjektor.context.dependency.traverser.DependencyTraverser;
 import com.github.enjektor.core.scanner.ConcreteClassScanner;
 import com.github.enjektor.core.scanner.ClassScanner;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;

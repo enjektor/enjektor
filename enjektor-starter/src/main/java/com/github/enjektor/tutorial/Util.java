@@ -2,16 +2,21 @@ package com.github.enjektor.tutorial;
 
 import com.github.enjektor.Int;
 import com.github.enjektor.core.annotations.Dependency;
+import com.github.enjektor.core.annotations.Inject;
 import com.github.enjektor.core.annotations.Qualifier;
-import lombok.AllArgsConstructor;
 
 @Dependency
-@AllArgsConstructor
 public class Util {
 
-    private final AnyDependencyThatYouNeed<Integer> anyDependencyThatYouNeed;
-    private final OtherDependency otherDependency;
-    @Qualifier("aInt") private final Int anInt;
+    @Inject
+    private AnyDependencyThatYouNeed<Integer> anyDependencyThatYouNeed;
+
+    @Inject
+    private OtherDependency otherDependency;
+
+    @Inject
+    @Qualifier("aInt")
+    private Int anInt;
 
     public void invoke() {
         System.out.println(anInt.x());
