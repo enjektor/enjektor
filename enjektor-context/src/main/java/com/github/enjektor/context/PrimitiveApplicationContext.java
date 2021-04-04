@@ -5,14 +5,14 @@ import com.github.enjektor.context.consumer.BeanInstantiateBiConsumer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.utils.NamingUtils;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.function.BiConsumer;
 
 public class PrimitiveApplicationContext implements ApplicationContext {
 
-    private final Map<Class<?>, Bean> beanHashMap = new HashMap<>();
+    private final Map<Class<?>, Bean> beanHashMap = new WeakHashMap<>();
     private final ApplicationContext defaultApplicationContext;
 
     public PrimitiveApplicationContext(final Class<?> mainClass, final List<DependencyInitializer> dependencyInitializers) {
