@@ -20,13 +20,14 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>5.6.0</junit.version>
-    <global.version>0.0.5</global.version>
+    <global.version>0.0.6.RELEASE</global.version>
 
     <!-- sub module versions -->
-    <enjektor.context.version>0.0.5.3</enjektor.context.version>
-    <enjektor.utils.version>0.0.2</enjektor.utils.version>
-    <enjektor.core.version>0.0.3.2</enjektor.core.version>
-    <enjektor.starter.version>0.0.1</enjektor.starter.version>
+    <enjektor.context.version>0.0.6.RELEASE</enjektor.context.version>
+    <enjektor.utils.version>0.0.2.RELEASE</enjektor.utils.version>
+    <enjektor.core.version>0.0.4.RELEASE</enjektor.core.version>
+    <enjektor.starter.version>0.0.1.RELEASE</enjektor.starter.version>
+    <!-- sub module versions -->
   </properties>
 
   <name>Enjektor</name>
