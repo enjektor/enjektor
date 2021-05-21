@@ -4,15 +4,15 @@ import com.github.enjektor.utils.NamingUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 public class Bean {
 
     private static final int INITIAL_CAPACITY = 3;
-    private final Map<String, Object> instancesOnRuntime = new WeakHashMap<>(INITIAL_CAPACITY);
+    private final Map<String, Object> instancesOnRuntime = new HashMap<>(INITIAL_CAPACITY);
     private final Class<?> classType;
 
     public Bean(final Class<?> classType) {
