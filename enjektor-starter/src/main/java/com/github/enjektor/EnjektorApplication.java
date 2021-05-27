@@ -4,9 +4,6 @@ import com.github.enjektor.context.ApplicationContext;
 import com.github.enjektor.context.PrimitiveApplicationContext;
 import com.github.enjektor.context.dependency.DefaultDependencyInitializer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
-import com.github.enjektor.tutorial.Util;
-
-import java.lang.reflect.Constructor;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,13 +14,9 @@ public class EnjektorApplication {
         final List<DependencyInitializer> dependencyInitializers = Collections.singletonList(dependencyInitializer);
 
         final ApplicationContext applicationContext = new PrimitiveApplicationContext(EnjektorApplication.class, dependencyInitializers);
-        final Util bean = applicationContext.getBean(Util.class);
-
-        final Class<AInt> aIntClass = AInt.class;
-        final Constructor<AInt> declaredConstructor = AInt.class.getConstructor();
-        System.out.println("declaredConstructor = " + declaredConstructor);
-
+        final IntE bean = applicationContext.getBean(IntE.class);
         bean.invoke();
+
 
         applicationContext.destroy();
         System.gc();
