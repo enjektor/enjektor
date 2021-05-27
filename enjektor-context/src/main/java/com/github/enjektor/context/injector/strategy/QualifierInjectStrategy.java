@@ -6,15 +6,14 @@ import com.github.enjektor.context.injector.lambda.InjectionTriConsumer;
 import com.github.enjektor.core.annotations.Inject;
 import com.github.enjektor.core.qualifier.UnsetQualifier;
 import com.github.enjektor.utils.NamingUtils;
-import gnu.trove.map.TByteObjectMap;
-import gnu.trove.map.hash.TByteObjectHashMap;
 
 import java.lang.reflect.Field;
 
 public class QualifierInjectStrategy implements InjectStrategy {
 
     private final Injector injector;
-    private final TByteObjectMap<InjectionTriConsumer> injectionTriConsumerStrategy = new TByteObjectHashMap<>(2);
+    private static final byte INITIAL_CAPACITY = (byte) 0x2;
+    private final InjectionTriConsumer[] injectionTriConsumerStrategy = new InjectionTriConsumer[INITIAL_CAPACITY];
 
     public QualifierInjectStrategy(Injector injector) {
         this.injector = injector;
@@ -35,14 +34,14 @@ public class QualifierInjectStrategy implements InjectStrategy {
             injector.inject(dependency);
         };
 
-        injectionTriConsumerStrategy.put((byte) 0, nonQualifierInjection);
-        injectionTriConsumerStrategy.put((byte) 1, qualifierInjection);
+        injectionTriConsumerStrategy[0x0] = nonQualifierInjection;
+        injectionTriConsumerStrategy[0x1] = qualifierInjection;
     }
 
     @Override
     public void inject(Bean bean, Object object, Field field) throws IllegalAccessException {
         final Inject inject = field.getAnnotation(Inject.class);
-        final byte isSetAnyQualifier = (byte) (inject.qualifier() != UnsetQualifier.class ? 1 : 0);
-        injectionTriConsumerStrategy.get(isSetAnyQualifier).accept(bean, object, field);
+        final byte isSetAnyQualifier = (byte) (inject.qualifier() != UnsetQualifier.class ? 0x1 : 0x0);
+        injectionTriConsumerStrategy[isSetAnyQualifier].accept(bean, object, field);
     }
 }

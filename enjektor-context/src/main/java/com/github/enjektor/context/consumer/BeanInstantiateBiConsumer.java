@@ -7,6 +7,7 @@ import com.github.enjektor.core.annotations.Inject;
 import com.github.enjektor.core.qualifier.UnsetQualifier;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
@@ -34,8 +35,8 @@ public class BeanInstantiateBiConsumer implements BiConsumer<Class<?>, Bean>, Be
             field.set(object, bean);
         };
 
-        qualifierInjectionBehaviour[0] = nonQualifierCase;
-        qualifierInjectionBehaviour[1] = qualifierCase;
+        qualifierInjectionBehaviour[0x0] = nonQualifierCase;
+        qualifierInjectionBehaviour[0x1] = qualifierCase;
     }
 
     public BeanInstantiateBiConsumer(final ApplicationContext applicationContext) {
@@ -48,25 +49,25 @@ public class BeanInstantiateBiConsumer implements BiConsumer<Class<?>, Bean>, Be
         for (final Map.Entry<String, Object> beanObjectEntry : instancesOnRuntime.entrySet()) {
             final Object runtimeInstance = beanObjectEntry.getValue();
             final Field[] declaredFields = runtimeInstance.getClass().getDeclaredFields();
-            for (final Field declaredField : declaredFields) {
-                try {
-                    manage(runtimeInstance, declaredField);
-                } catch (IllegalAccessException | InstantiationException e) {
-                    e.printStackTrace();
-                }
-            }
+            Arrays
+                .stream(declaredFields)
+                .filter(field -> field.isAnnotationPresent(Inject.class))
+                .forEach(field -> {
+                    try {
+                        field.setAccessible(true);
+                        manage(runtimeInstance, field);
+                    } catch (IllegalAccessException | InstantiationException e) {
+                        e.printStackTrace();
+                    }
+                });
         }
     }
 
     @Override
     public void manage(Object object,
                        Field field) throws IllegalAccessException, InstantiationException {
-        field.setAccessible(true);
-
-        if (field.isAnnotationPresent(Inject.class)) {
-            Inject inject = field.getAnnotation(Inject.class);
-            final byte isSetAnyQualifier = (byte) (inject.qualifier() != UnsetQualifier.class ? 1 : 0);
-            qualifierInjectionBehaviour[isSetAnyQualifier].accept(object, field, applicationContext);
-        }
+        Inject inject = field.getAnnotation(Inject.class);
+        final byte isSetAnyQualifier = (byte) (inject.qualifier() != UnsetQualifier.class ? 0x1 : 0x0);
+        qualifierInjectionBehaviour[isSetAnyQualifier].accept(object, field, applicationContext);
     }
 }
