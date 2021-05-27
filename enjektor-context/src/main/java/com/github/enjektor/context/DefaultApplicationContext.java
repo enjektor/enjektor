@@ -4,7 +4,7 @@ import com.github.enjektor.context.bean.Bean;
 import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.context.injector.Injector;
-import com.github.enjektor.context.injector.RecursiveConstructorInjector;
+import com.github.enjektor.context.injector.RecursiveFieldInjector;
 import com.github.enjektor.utils.NamingUtils;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
                                      final Map<Class<?>, Bean> beanHashMap,
                                      final List<DependencyInitializer> dependencyInitializers) {
         this.beanHashMap = beanHashMap;
-        this.recursiveInjector = new RecursiveConstructorInjector(beanHashMap);
+        this.recursiveInjector = new RecursiveFieldInjector(beanHashMap);
         this.dependencyInitializers = dependencyInitializers;
         init(mainClass);
     }

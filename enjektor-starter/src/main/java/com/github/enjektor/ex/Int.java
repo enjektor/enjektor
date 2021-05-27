@@ -1,8 +1,8 @@
-package com.github.enjektor;
+package com.github.enjektor.ex;
 
 import com.github.enjektor.core.annotations.Dependency;
 
 @Dependency
 public interface Int {
-    int x();
+    void any();
 }

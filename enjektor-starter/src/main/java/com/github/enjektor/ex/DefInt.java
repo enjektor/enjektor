@@ -1,11 +1,11 @@
-package com.github.enjektor;
+package com.github.enjektor.ex;
 
 import com.github.enjektor.core.annotations.Dependency;
 
 @Dependency
-public class DefStringRandomizer implements StringRandomizer {
+public class DefInt implements Int {
     @Override
     public void any() {
-
+        System.out.println("calisiyor ehhee");
     }
 }
