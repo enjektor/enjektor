@@ -19,6 +19,10 @@ public class Bean {
         this.classType = classType;
     }
 
+    public final void register(String beanName, Object object) {
+        instancesOnRuntime.put(beanName, object);
+    }
+
     public final void register(final Class<?> classType) {
         register(classType, Optional.empty());
     }
