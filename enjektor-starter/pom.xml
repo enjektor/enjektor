@@ -34,6 +34,11 @@
       <artifactId>jdbc-starter</artifactId>
       <version>1.0.5</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.github.enjektor</groupId>
+      <artifactId>enjektor-epel</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

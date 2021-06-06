@@ -2,7 +2,9 @@ package com.github.enjektor.context;
 
 public interface ApplicationContext {
     void init();
+
     void destroy();
+
 
     <T> T getBean(final Class<T> classType) throws IllegalAccessException, InstantiationException;
 

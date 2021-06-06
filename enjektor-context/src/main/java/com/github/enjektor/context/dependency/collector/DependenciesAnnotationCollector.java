@@ -1,6 +1,6 @@
 package com.github.enjektor.context.dependency.collector;
 
-import com.github.enjektor.context.bean.Bean;
+import com.github.enjektor.core.bean.Bean;
 import com.github.enjektor.core.annotations.Dependencies;
 import com.github.enjektor.utils.NamingUtils;
 

@@ -13,11 +13,14 @@ import java.sql.SQLException;
 public class EnjektorJdbc {
 
     @Inject
+    private String query;
+
+    @Inject
     private DataSource dataSource;
 
     public void print() {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from memory_metrics");
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             final ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 System.out.println(resultSet.getString(6));

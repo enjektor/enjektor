@@ -7,25 +7,21 @@
     <groupId>com.github.enjektor</groupId>
     <version>${global.version}</version>
   </parent>
-
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>enjektor-core</artifactId>
-  <version>${enjektor.core.version}</version>
-
-  <properties>
-    <maven.deploy.skip>false</maven.deploy.skip>
-  </properties>
+  <artifactId>enjektor-epel</artifactId>
+  <version>${enjektor.epel.version}</version>
 
   <dependencies>
     <dependency>
-      <groupId>org.reflections</groupId>
-      <artifactId>reflections</artifactId>
-      <version>0.9.11</version>
-    </dependency>
-    <dependency>
       <groupId>com.github.enjektor</groupId>
-      <artifactId>enjektor-utils</artifactId>
+      <artifactId>enjektor-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+      <version>2.12.3</version>
     </dependency>
   </dependencies>
 

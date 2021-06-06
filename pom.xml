@@ -13,6 +13,7 @@
     <module>enjektor-context</module>
     <module>enjektor-starter</module>
     <module>enjektor-utils</module>
+      <module>enjektor-epel</module>
   </modules>
 
   <properties>
@@ -27,6 +28,7 @@
     <enjektor.utils.version>0.0.2.RELEASE</enjektor.utils.version>
     <enjektor.core.version>0.0.4.1</enjektor.core.version>
     <enjektor.starter.version>0.0.1.RELEASE</enjektor.starter.version>
+    <enjektor.epel.version>0.0.1</enjektor.epel.version>
     <!-- sub module versions -->
   </properties>
 
@@ -81,6 +83,12 @@
         <groupId>com.github.enjektor</groupId>
         <artifactId>enjektor-starter</artifactId>
         <version>${enjektor.starter.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.enjektor</groupId>
+        <artifactId>enjektor-epel</artifactId>
+        <version>${enjektor.epel.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

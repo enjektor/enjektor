@@ -1,8 +1,8 @@
 package com.github.enjektor.context.consumer;
 
 import com.github.enjektor.context.ApplicationContext;
-import com.github.enjektor.context.bean.Bean;
-import com.github.enjektor.context.bean.BeanManager;
+import com.github.enjektor.core.bean.Bean;
+import com.github.enjektor.core.bean.BeanManager;
 import com.github.enjektor.core.annotations.Inject;
 import com.github.enjektor.core.qualifier.UnsetQualifier;
 

@@ -1,6 +1,6 @@
 package com.github.enjektor.context.injector;
 
-import com.github.enjektor.context.bean.Bean;
+import com.github.enjektor.core.bean.Bean;
 import com.github.enjektor.core.annotations.Qualifier;
 import com.github.enjektor.core.scanner.field.DefaultFieldScanner;
 import com.github.enjektor.core.scanner.field.FieldScanner;
