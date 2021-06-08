@@ -13,4 +13,5 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Inject {
     Class<?> qualifier() default UnsetQualifier.class;
+    String value() default "";
 }

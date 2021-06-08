@@ -12,7 +12,7 @@ import java.sql.SQLException;
 @Dependency
 public class EnjektorJdbc {
 
-    @Inject
+//    @Inject("jdbc.query")
     private String query;
 
     @Inject

@@ -1,18 +1,21 @@
 package com.github.enjektor.core.bean;
 
 import com.github.enjektor.utils.NamingUtils;
+import com.github.enjektor.utils.hash.ConcreteHashProvider;
+import com.github.enjektor.utils.hash.HashProvider;
+import gnu.trove.map.TByteObjectMap;
+import gnu.trove.map.hash.TByteObjectHashMap;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 public class Bean {
 
-    private static final int INITIAL_CAPACITY = 3;
-    private final Map<String, Object> instancesOnRuntime = new HashMap<>(INITIAL_CAPACITY);
+    private static final byte INITIAL_CAPACITY = (byte) 0x03;
+    private static final float LOAD_FACTOR = 0.75f;
+    private static final HashProvider HASH_PROVIDER = ConcreteHashProvider.getInstance();
+    private final TByteObjectMap<Object> instancesOnRuntime = new TByteObjectHashMap<>(INITIAL_CAPACITY, LOAD_FACTOR);
     private final Class<?> classType;
 
     public Bean(final Class<?> classType) {
@@ -20,7 +23,8 @@ public class Bean {
     }
 
     public final void register(String beanName, Object object) {
-        instancesOnRuntime.put(beanName, object);
+        final byte hash = HASH_PROVIDER.provideByteHash(beanName);
+        instancesOnRuntime.put(hash, object);
     }
 
     public final void register(final Class<?> classType) {
@@ -35,14 +39,12 @@ public class Bean {
     public final void register(final Class<?> classType,
                                final Optional<String> dependencyNameOpt) {
         try {
-//            final ReflectionFactory reflectionFactory = ReflectionFactory.getReflectionFactory();
-//            final Constructor<?> constructor = reflectionFactory.newConstructorForSerialization(classType, Object.class.getDeclaredConstructor(new Class[0]));
-//            final Object implementationInstance = constructor.newInstance(new Object[0]);
             final Constructor<?> constructor = classType.getConstructor();
             final Object implementationInstance = constructor.newInstance();
             final String simpleClassName = NamingUtils.beanCase(classType.getSimpleName());
             final String className = dependencyNameOpt.orElse(simpleClassName);
-            instancesOnRuntime.put(className, implementationInstance);
+            final byte hash = HASH_PROVIDER.provideByteHash(className);
+            instancesOnRuntime.put(hash, implementationInstance);
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             // TODO: add sl4fj
             e.printStackTrace();
@@ -50,20 +52,15 @@ public class Bean {
     }
 
     public final Object getDependency(final String dependencyUniqueName) {
-        if (instancesOnRuntime.size() == 1) {
-            String classNameHolder = null;
-            final Set<Map.Entry<String, Object>> entries = instancesOnRuntime.entrySet();
-            for (Map.Entry<String, Object> entry : entries) classNameHolder = entry.getKey();
-            return instancesOnRuntime.get(classNameHolder);
-        }
-        return instancesOnRuntime.get(dependencyUniqueName);
+        return instancesOnRuntime.size() != 1 ?
+            instancesOnRuntime.get(HASH_PROVIDER.provideByteHash(dependencyUniqueName)) : instancesOnRuntime.values()[0];
     }
 
     public Class<?> getClassType() {
         return classType;
     }
 
-    public Map<String, Object> getInstancesOnRuntime() {
+    public TByteObjectMap<Object> getInstancesOnRuntime() {
         return instancesOnRuntime;
     }
 
@@ -74,3 +71,10 @@ public class Bean {
             '}';
     }
 }
+
+
+/**
+ * //            final ReflectionFactory reflectionFactory = ReflectionFactory.getReflectionFactory();
+ * //            final Constructor<?> constructor = reflectionFactory.newConstructorForSerialization(classType, Object.class.getDeclaredConstructor(new Class[0]));
+ * //            final Object implementationInstance = constructor.newInstance(new Object[0]);
+ */
