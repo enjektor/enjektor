@@ -1,6 +1,6 @@
 package com.github.enjektor.context.injector.strategy;
 
-import com.github.enjektor.context.bean.Bean;
+import com.github.enjektor.core.bean.Bean;
 import com.github.enjektor.context.injector.Injector;
 import com.github.enjektor.context.injector.lambda.InjectionTriConsumer;
 import com.github.enjektor.core.annotations.Inject;

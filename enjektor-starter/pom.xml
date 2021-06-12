@@ -28,6 +28,16 @@
       <artifactId>lombok</artifactId>
       <version>1.18.14</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.github.enjektor</groupId>
+      <artifactId>enjektor-jdbc</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.enjektor</groupId>
+      <artifactId>enjektor-epel</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

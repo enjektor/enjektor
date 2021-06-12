@@ -13,6 +13,7 @@
     <module>enjektor-context</module>
     <module>enjektor-starter</module>
     <module>enjektor-utils</module>
+      <module>enjektor-epel</module>
   </modules>
 
   <properties>
@@ -20,13 +21,14 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>5.6.0</junit.version>
-    <global.version>0.0.6.RELEASE</global.version>
+    <global.version>0.0.6.1</global.version>
 
     <!-- sub module versions -->
-    <enjektor.context.version>0.0.6.6</enjektor.context.version>
-    <enjektor.utils.version>0.0.2.RELEASE</enjektor.utils.version>
-    <enjektor.core.version>0.0.4.1</enjektor.core.version>
+    <enjektor.context.version>0.0.6.7</enjektor.context.version>
+    <enjektor.utils.version>0.0.2.1</enjektor.utils.version>
+    <enjektor.core.version>0.0.4.5</enjektor.core.version>
     <enjektor.starter.version>0.0.1.RELEASE</enjektor.starter.version>
+    <enjektor.epel.version>0.0.2.2</enjektor.epel.version>
     <!-- sub module versions -->
   </properties>
 
@@ -82,6 +84,18 @@
         <artifactId>enjektor-starter</artifactId>
         <version>${enjektor.starter.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>com.github.enjektor</groupId>
+        <artifactId>enjektor-epel</artifactId>
+        <version>${enjektor.epel.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.enjektor</groupId>
+        <artifactId>enjektor-jdbc</artifactId>
+        <version>0.0.2</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -128,6 +142,9 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
         <version>1.5</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
         <executions>
           <execution>
             <id>sign-artifacts</id>

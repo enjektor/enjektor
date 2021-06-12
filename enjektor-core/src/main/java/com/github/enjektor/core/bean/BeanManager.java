@@ -1,4 +1,4 @@
-package com.github.enjektor.context.bean;
+package com.github.enjektor.core.bean;
 
 import java.lang.reflect.Field;
 
