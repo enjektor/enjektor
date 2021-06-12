@@ -30,9 +30,8 @@
     </dependency>
 
     <dependency>
-      <groupId>com.github.enesusta</groupId>
-      <artifactId>jdbc-starter</artifactId>
-      <version>1.0.5</version>
+      <groupId>com.github.enjektor</groupId>
+      <artifactId>enjektor-jdbc</artifactId>
     </dependency>
 
     <dependency>

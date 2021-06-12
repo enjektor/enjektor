@@ -15,7 +15,18 @@
 
   <properties>
     <maven.deploy.skip>false</maven.deploy.skip>
+    <google-auto-service.version>1.0</google-auto-service.version>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.auto.service</groupId>
+        <artifactId>auto-service</artifactId>
+        <version>${google-auto-service.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -26,6 +37,11 @@
     <dependency>
       <groupId>com.github.enjektor</groupId>
       <artifactId>enjektor-utils</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.auto.service</groupId>
+      <artifactId>auto-service</artifactId>
     </dependency>
   </dependencies>
 

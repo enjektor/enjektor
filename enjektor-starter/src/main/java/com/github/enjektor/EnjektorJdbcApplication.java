@@ -4,10 +4,11 @@ import com.github.enjektor.context.ApplicationContext;
 import com.github.enjektor.context.PrimitiveApplicationContext;
 import com.github.enjektor.context.dependency.ConcreteDependencyInitializer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
+import com.github.enjektor.core.auto.configuration.BeanAutoConfiguration;
 import com.github.enjektor.core.bean.Bean;
-import com.github.enjektor.epel.yaml.YamlEpelExporter;
-import com.github.enjektor.epel.EpelExporter;
+import com.github.enjektor.core.bean.pair.Pair;
 import com.github.enjektor.jdbc.EnjektorJdbc;
+import com.github.enjektor.jdbc.EnjektorJdbcAutoConfiguration;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,11 +22,13 @@ public class EnjektorJdbcApplication {
         final DependencyInitializer dependencyInitializer = new ConcreteDependencyInitializer();
         final List<DependencyInitializer> dependencyInitializers = Collections.singletonList(dependencyInitializer);
 
-        final EpelExporter concreteEpelExporter = new YamlEpelExporter();
+        BeanAutoConfiguration beanAutoConfiguration = new EnjektorJdbcAutoConfiguration();
+        Pair export = beanAutoConfiguration.export();
+
+//        final EpelExporter concreteEpelExporter = new YamlEpelExporter();
 
         final Map<Class<?>, Bean> beans = new WeakHashMap<>();
-        beans.putAll(concreteEpelExporter.export(""));
-
+        beans.put(export.getType(), export.getBean());
 
         final ApplicationContext applicationContext = new PrimitiveApplicationContext(EnjektorJdbcApplication.class, dependencyInitializers, beans);
 
