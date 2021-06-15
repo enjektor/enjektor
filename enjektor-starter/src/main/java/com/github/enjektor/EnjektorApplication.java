@@ -5,6 +5,7 @@ import com.github.enjektor.context.PrimitiveApplicationContext;
 import com.github.enjektor.context.dependency.ConcreteDependencyInitializer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.core.bean.Bean;
+import com.github.enjektor.single.IntE;
 
 import java.util.Collections;
 import java.util.List;

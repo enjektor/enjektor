@@ -1,4 +1,4 @@
-package com.github.enjektor;
+package com.github.enjektor.single;
 
 import com.github.enjektor.core.annotations.Dependency;
 

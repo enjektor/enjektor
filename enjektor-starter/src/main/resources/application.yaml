@@ -1,5 +1,6 @@
 enjektor:
   datasource:
-    url: jdbc:postgresql://localhost:5432/docker?characterEncoding=utf8
+    database: docker
+    host: localhost
     username: docker
     password: 123456
