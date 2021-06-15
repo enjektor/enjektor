@@ -3,6 +3,7 @@ package com.github.enjektor.context;
 import com.github.enjektor.context.consumer.BeanInstantiateBiConsumer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.context.handler.DeAllocationHandler;
+import com.github.enjektor.context.injection.InjectionManager;
 import com.github.enjektor.core.bean.Bean;
 import com.github.enjektor.utils.NamingUtils;
 
@@ -25,7 +26,8 @@ public class PrimitiveApplicationContext implements ApplicationContext, DeAlloca
 
     @Override
     public void init() {
-        final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(applicationContext);
+        final InjectionManager injectionManager = new InjectionManager(applicationContext, beans);
+        final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(injectionManager);
         beans.forEach(beanBiConsumer);
     }
 
