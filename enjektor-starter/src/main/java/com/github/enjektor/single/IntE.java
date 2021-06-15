@@ -1,4 +1,4 @@
-package com.github.enjektor;
+package com.github.enjektor.single;
 
 import com.github.enjektor.core.annotations.Dependency;
 import com.github.enjektor.core.annotations.Inject;
@@ -6,7 +6,6 @@ import com.github.enjektor.ex.Int;
 import com.github.enjektor.middleware.AuthenticationMiddleware;
 import com.github.enjektor.middleware.LoggingMiddleware;
 import com.github.enjektor.middleware.Middleware;
-import com.github.enjektor.single.SingleComponent;
 
 @Dependency
 public class IntE {
