@@ -5,6 +5,10 @@ import java.util.List;
 public class StringListWrapper {
     private List<String> values;
 
+    public StringListWrapper(List<String> values) {
+        this.values = values;
+    }
+
     public void setValues(List<String> values) {
         this.values = values;
     }

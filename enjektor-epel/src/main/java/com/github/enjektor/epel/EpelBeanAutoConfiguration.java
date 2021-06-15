@@ -24,8 +24,7 @@ public class EpelBeanAutoConfiguration implements BeanAutoConfiguration {
         final String configuration = yamlConverter.convert(profileProperty);
         final List<String> parse = epelParser.parse(configuration);
 
-        final StringListWrapper stringListWrapper = new StringListWrapper();
-        stringListWrapper.setValues(parse);
+        final StringListWrapper stringListWrapper = new StringListWrapper(parse);
 
         final Bean bean = new Bean(StringListWrapper.class);
         bean.register("stringListWrapper", stringListWrapper);

@@ -9,7 +9,7 @@ import java.util.List;
 public class ListWrapper {
 
     @Inject
-    private List<String> values;
+    private List<Integer> values;
 
     public void invoke() {
         values.forEach(System.out::println);

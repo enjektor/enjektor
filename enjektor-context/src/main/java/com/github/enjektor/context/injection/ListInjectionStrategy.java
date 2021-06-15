@@ -2,6 +2,7 @@ package com.github.enjektor.context.injection;
 
 import com.github.enjektor.context.ApplicationContext;
 import com.github.enjektor.core.bean.Bean;
+import com.github.enjektor.core.wrapper.IntegerListWrapper;
 import com.github.enjektor.core.wrapper.StringListWrapper;
 
 import java.beans.IntrospectionException;
@@ -14,10 +15,11 @@ import java.util.Map;
 
 public class ListInjectionStrategy implements InjectionStrategy {
 
-    private final static Map<Class<?>, Class<?>> wrappers = new HashMap<>(1);
+    private final static Map<Class<?>, Class<?>> wrappers = new HashMap<>(3);
 
     static {
         wrappers.put(String.class, StringListWrapper.class);
+        wrappers.put(Integer.class, IntegerListWrapper.class);
     }
 
     @Override
@@ -34,7 +36,7 @@ public class ListInjectionStrategy implements InjectionStrategy {
         final Object dependency = beans.get(wrapperClass).getDependency(qualifier);
 
         try {
-            final Object values = new PropertyDescriptor("values", StringListWrapper.class).getReadMethod().invoke(dependency);
+            final Object values = new PropertyDescriptor("values", wrapperClass).getReadMethod().invoke(dependency);
             field.set(object, values);
         } catch (InvocationTargetException e) {
             e.printStackTrace();

@@ -7,6 +7,7 @@ import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.core.auto.configuration.BeanAutoConfiguration;
 import com.github.enjektor.core.bean.Bean;
 import com.github.enjektor.core.bean.pair.Pair;
+import com.github.enjektor.core.wrapper.IntegerListWrapper;
 import com.github.enjektor.epel.EpelBeanAutoConfiguration;
 
 import java.util.Collections;
@@ -26,6 +27,13 @@ public class ListWrapperApplication {
 
         final Map<Class<?>, Bean> beans = new WeakHashMap<>();
         beans.put(ex.getType(), ex.getBean());
+
+        List<Integer> list = List.of(1, 2, 3, 4, 5);
+        Bean x = new Bean(IntegerListWrapper.class);
+        final IntegerListWrapper integerListWrapper = new IntegerListWrapper(list);
+        x.register(IntegerListWrapper.class.getSimpleName(), integerListWrapper);
+
+        beans.put(IntegerListWrapper.class, x);
 
         final ApplicationContext applicationContext = new PrimitiveApplicationContext(ListWrapperApplication.class, dependencyInitializers, beans);
 
