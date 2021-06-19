@@ -14,6 +14,7 @@ public class DefaultInjectionStrategy implements InjectionStrategy {
                        String value,
                        ApplicationContext applicationContext,
                        Map<Class<?>, Bean> beans) throws InstantiationException, IllegalAccessException {
-
+        final Object bean = applicationContext.getBean(field.getType());
+        field.set(object, bean);
     }
 }
