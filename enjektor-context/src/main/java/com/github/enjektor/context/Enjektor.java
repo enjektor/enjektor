@@ -19,11 +19,11 @@ public class Enjektor {
         applicationContext = new PrimitiveApplicationContext(mainClass, dependencyInitializers);
     }
 
-    public <T> T getBean(final Class<T> classType) throws IllegalAccessException, InstantiationException {
+    public <T> T getDependency(final Class<T> classType) throws IllegalAccessException, InstantiationException {
         return applicationContext.getBean(classType);
     }
 
-    public <T> T getBean(final Class<T> classType, final String fieldName) throws IllegalAccessException, InstantiationException {
+    public <T> T getDependency(final Class<T> classType, final String fieldName) throws IllegalAccessException, InstantiationException {
         return applicationContext.getBean(classType, fieldName);
     }
 
