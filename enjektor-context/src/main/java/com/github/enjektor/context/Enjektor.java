@@ -27,6 +27,14 @@ public class Enjektor {
         return applicationContext.getBean(classType, fieldName);
     }
 
+    public void destroy() {
+        applicationContext.destroy();
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public static class Builder {
         private List<DependencyInitializer> dependencyInitializers = new ArrayList<>();
         private Class<?> mainClass;
