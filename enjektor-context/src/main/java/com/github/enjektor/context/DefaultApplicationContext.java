@@ -5,7 +5,7 @@ import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.context.injector.Injector;
 import com.github.enjektor.context.injector.RecursiveFieldInjector;
 import com.github.enjektor.core.bean.Bean;
-import com.github.enjektor.utils.NamingUtils;
+import com.github.enjektor.core.util.NamingUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -19,18 +19,16 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
 
     private final Map<Class<?>, Bean> beanHashMap;
     private Injector recursiveInjector;
-    private List<DependencyInitializer> dependencyInitializers;
 
     public DefaultApplicationContext(final Class<?> mainClass,
                                      final Map<Class<?>, Bean> beanHashMap,
                                      final List<DependencyInitializer> dependencyInitializers) {
         this.beanHashMap = beanHashMap;
         this.recursiveInjector = new RecursiveFieldInjector(beanHashMap);
-        this.dependencyInitializers = dependencyInitializers;
-        init(mainClass);
+        init(mainClass, dependencyInitializers);
     }
 
-    private void init(final Class<?> mainClass) {
+    private void init(final Class<?> mainClass, List<DependencyInitializer> dependencyInitializers) {
         for (final DependencyInitializer dependencyInitializer : dependencyInitializers)
             beanHashMap.putAll(dependencyInitializer.initialize(mainClass));
     }
@@ -78,6 +76,5 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
     @Override
     public void clean() {
         recursiveInjector = null;
-        dependencyInitializers = null;
     }
 }

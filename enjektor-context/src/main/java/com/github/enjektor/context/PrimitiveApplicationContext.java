@@ -3,29 +3,30 @@ package com.github.enjektor.context;
 import com.github.enjektor.context.consumer.BeanInstantiateBiConsumer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.context.handler.DeAllocationHandler;
+import com.github.enjektor.context.injection.InjectionManager;
 import com.github.enjektor.core.bean.Bean;
-import com.github.enjektor.utils.NamingUtils;
+import com.github.enjektor.core.util.NamingUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.function.BiConsumer;
 
 public class PrimitiveApplicationContext implements ApplicationContext, DeAllocationHandler {
 
-    private Map<Class<?>, Bean> beans;
+    private Map<Class<?>, Bean> beans = new WeakHashMap<>();
     private ApplicationContext applicationContext;
 
     public PrimitiveApplicationContext(final Class<?> mainClass,
-                                       final List<DependencyInitializer> dependencyInitializers,
-                                       final Map<Class<?>, Bean> beans) {
-        this.beans = beans;
+                                       final List<DependencyInitializer> dependencyInitializers) {
         this.applicationContext = new DefaultApplicationContext(mainClass, beans, dependencyInitializers);
         init();
     }
 
     @Override
     public void init() {
-        final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(applicationContext);
+        final InjectionManager injectionManager = new InjectionManager(applicationContext, beans);
+        final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(injectionManager);
         beans.forEach(beanBiConsumer);
     }
 

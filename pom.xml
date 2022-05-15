@@ -11,21 +11,17 @@
   <modules>
     <module>enjektor-core</module>
     <module>enjektor-context</module>
-    <module>enjektor-starter</module>
-    <module>enjektor-utils</module>
-      <module>enjektor-epel</module>
   </modules>
 
   <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>5.6.0</junit.version>
-    <global.version>0.0.6.1</global.version>
+    <global.version>0.0.6.6</global.version>
 
     <!-- sub module versions -->
-    <enjektor.context.version>0.0.6.7</enjektor.context.version>
-    <enjektor.utils.version>0.0.2.1</enjektor.utils.version>
+    <enjektor.context.version>0.0.7.2</enjektor.context.version>
     <enjektor.core.version>0.0.4.5</enjektor.core.version>
     <enjektor.starter.version>0.0.1.RELEASE</enjektor.starter.version>
     <enjektor.epel.version>0.0.2.2</enjektor.epel.version>
@@ -33,7 +29,9 @@
   </properties>
 
   <name>Enjektor</name>
-  <description>Enjektor is an application framework and inversion of control container for the Java platform.</description>
+  <description>Enjektor is an application framework and inversion of control
+    container for the Java platform.
+  </description>
   <url>https://github.com/enjektor/enjektor</url>
 
   <licenses>
@@ -54,7 +52,8 @@
 
   <scm>
     <connection>scm:git:git://github.com/enjektor/enjektor.git</connection>
-    <developerConnection>scm:git:ssh://github.com/enjektor/enjektor.git</developerConnection>
+    <developerConnection>scm:git:ssh://github.com/enjektor/enjektor.git
+    </developerConnection>
     <url>https://github.com/enjektor/enjektor</url>
     <tag>HEAD</tag>
   </scm>
@@ -69,20 +68,8 @@
 
       <dependency>
         <groupId>com.github.enjektor</groupId>
-        <artifactId>enjektor-utils</artifactId>
-        <version>${enjektor.utils.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.github.enjektor</groupId>
         <artifactId>enjektor-context</artifactId>
         <version>${enjektor.context.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.github.enjektor</groupId>
-        <artifactId>enjektor-starter</artifactId>
-        <version>${enjektor.starter.version}</version>
       </dependency>
 
       <dependency>
@@ -94,7 +81,7 @@
       <dependency>
         <groupId>com.github.enjektor</groupId>
         <artifactId>enjektor-jdbc</artifactId>
-        <version>0.0.2</version>
+        <version>0.0.2.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
