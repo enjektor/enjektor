@@ -22,11 +22,6 @@
       <groupId>com.github.enjektor</groupId>
       <artifactId>enjektor-core</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>com.github.enjektor</groupId>
-      <artifactId>enjektor-utils</artifactId>
-    </dependency>
   </dependencies>
 
 </project>

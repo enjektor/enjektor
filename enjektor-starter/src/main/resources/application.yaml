@@ -1,6 +1,0 @@
-enjektor:
-  datasource:
-    database: docker
-    host: localhost
-    username: docker
-    password: 123456
