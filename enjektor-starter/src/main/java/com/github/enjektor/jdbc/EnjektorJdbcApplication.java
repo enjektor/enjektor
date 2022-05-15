@@ -17,21 +17,21 @@ import java.util.WeakHashMap;
 public class EnjektorJdbcApplication {
     public static void main(String[] args) throws InstantiationException, IllegalAccessException {
 
-        final DependencyInitializer dependencyInitializer = new ConcreteDependencyInitializer();
-        final List<DependencyInitializer> dependencyInitializers = Collections.singletonList(dependencyInitializer);
-
-        BeanAutoConfiguration beanAutoConfiguration = new EnjektorJdbcAutoConfiguration();
-        Pair export = beanAutoConfiguration.export();
-
-//        final EpelExporter concreteEpelExporter = new YamlEpelExporter();
-
-        final Map<Class<?>, Bean> beans = new WeakHashMap<>();
-        beans.put(export.getType(), export.getBean());
-
-        final ApplicationContext applicationContext = new PrimitiveApplicationContext(EnjektorJdbcApplication.class, dependencyInitializers, beans);
-
-        final EnjektorJdbc bean = applicationContext.getBean(EnjektorJdbc.class);
-        bean.print();
+//        final DependencyInitializer dependencyInitializer = new ConcreteDependencyInitializer();
+//        final List<DependencyInitializer> dependencyInitializers = Collections.singletonList(dependencyInitializer);
+//
+//        BeanAutoConfiguration beanAutoConfiguration = new EnjektorJdbcAutoConfiguration();
+//        Pair export = beanAutoConfiguration.export();
+//
+////        final EpelExporter concreteEpelExporter = new YamlEpelExporter();
+//
+//        final Map<Class<?>, Bean> beans = new WeakHashMap<>();
+//        beans.put(export.getType(), export.getBean());
+//
+//        final ApplicationContext applicationContext = new PrimitiveApplicationContext(EnjektorJdbcApplication.class, dependencyInitializers, beans);
+//
+//        final EnjektorJdbc bean = applicationContext.getBean(EnjektorJdbc.class);
+//        bean.print();
 
 
     }

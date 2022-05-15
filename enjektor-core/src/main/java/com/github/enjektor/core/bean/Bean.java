@@ -1,8 +1,8 @@
 package com.github.enjektor.core.bean;
 
-import com.github.enjektor.utils.NamingUtils;
-import com.github.enjektor.utils.hash.ConcreteHashProvider;
-import com.github.enjektor.utils.hash.HashProvider;
+import com.github.enjektor.core.util.NamingUtils;
+import com.github.enjektor.core.util.hash.ConcreteHashProvider;
+import com.github.enjektor.core.util.hash.HashProvider;
 import gnu.trove.map.TByteObjectMap;
 import gnu.trove.map.hash.TByteObjectHashMap;
 

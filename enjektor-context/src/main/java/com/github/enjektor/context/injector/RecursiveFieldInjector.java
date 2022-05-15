@@ -5,7 +5,7 @@ import com.github.enjektor.context.injector.strategy.InjectStrategy;
 import com.github.enjektor.context.injector.strategy.QualifierInjectStrategy;
 import com.github.enjektor.core.scanner.field.FieldScanner;
 import com.github.enjektor.core.scanner.field.InjectAnnotationFieldScanner;
-import com.github.enjektor.utils.NamingUtils;
+import com.github.enjektor.core.util.NamingUtils;
 
 import java.lang.reflect.Field;
 import java.util.Map;

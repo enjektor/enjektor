@@ -5,7 +5,7 @@ import com.github.enjektor.context.injector.Injector;
 import com.github.enjektor.context.injector.lambda.InjectionTriConsumer;
 import com.github.enjektor.core.annotations.Inject;
 import com.github.enjektor.core.qualifier.UnsetQualifier;
-import com.github.enjektor.utils.NamingUtils;
+import com.github.enjektor.core.util.NamingUtils;
 
 import java.lang.reflect.Field;
 
