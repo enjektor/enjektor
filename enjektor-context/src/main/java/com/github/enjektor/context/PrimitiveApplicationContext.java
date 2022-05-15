@@ -9,17 +9,16 @@ import com.github.enjektor.core.util.NamingUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.function.BiConsumer;
 
 public class PrimitiveApplicationContext implements ApplicationContext, DeAllocationHandler {
 
-    private Map<Class<?>, Bean> beans;
+    private Map<Class<?>, Bean> beans = new WeakHashMap<>();
     private ApplicationContext applicationContext;
 
     public PrimitiveApplicationContext(final Class<?> mainClass,
-                                       final List<DependencyInitializer> dependencyInitializers,
-                                       final Map<Class<?>, Bean> beans) {
-        this.beans = beans;
+                                       final List<DependencyInitializer> dependencyInitializers) {
         this.applicationContext = new DefaultApplicationContext(mainClass, beans, dependencyInitializers);
         init();
     }
