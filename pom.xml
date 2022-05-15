@@ -11,13 +11,11 @@
   <modules>
     <module>enjektor-core</module>
     <module>enjektor-context</module>
-    <module>enjektor-starter</module>
-    <module>enjektor-epel</module>
   </modules>
 
   <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>5.6.0</junit.version>
     <global.version>0.0.6.2</global.version>
@@ -72,12 +70,6 @@
         <groupId>com.github.enjektor</groupId>
         <artifactId>enjektor-context</artifactId>
         <version>${enjektor.context.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.github.enjektor</groupId>
-        <artifactId>enjektor-starter</artifactId>
-        <version>${enjektor.starter.version}</version>
       </dependency>
 
       <dependency>
