@@ -12,8 +12,7 @@
     <module>enjektor-core</module>
     <module>enjektor-context</module>
     <module>enjektor-starter</module>
-    <module>enjektor-utils</module>
-      <module>enjektor-epel</module>
+    <module>enjektor-epel</module>
   </modules>
 
   <properties>
@@ -25,7 +24,6 @@
 
     <!-- sub module versions -->
     <enjektor.context.version>0.0.6.8</enjektor.context.version>
-    <enjektor.utils.version>0.0.2.1</enjektor.utils.version>
     <enjektor.core.version>0.0.4.5</enjektor.core.version>
     <enjektor.starter.version>0.0.1.RELEASE</enjektor.starter.version>
     <enjektor.epel.version>0.0.2.2</enjektor.epel.version>
@@ -33,7 +31,9 @@
   </properties>
 
   <name>Enjektor</name>
-  <description>Enjektor is an application framework and inversion of control container for the Java platform.</description>
+  <description>Enjektor is an application framework and inversion of control
+    container for the Java platform.
+  </description>
   <url>https://github.com/enjektor/enjektor</url>
 
   <licenses>
@@ -54,7 +54,8 @@
 
   <scm>
     <connection>scm:git:git://github.com/enjektor/enjektor.git</connection>
-    <developerConnection>scm:git:ssh://github.com/enjektor/enjektor.git</developerConnection>
+    <developerConnection>scm:git:ssh://github.com/enjektor/enjektor.git
+    </developerConnection>
     <url>https://github.com/enjektor/enjektor</url>
     <tag>HEAD</tag>
   </scm>
@@ -65,12 +66,6 @@
         <groupId>com.github.enjektor</groupId>
         <artifactId>enjektor-core</artifactId>
         <version>${enjektor.core.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.github.enjektor</groupId>
-        <artifactId>enjektor-utils</artifactId>
-        <version>${enjektor.utils.version}</version>
       </dependency>
 
       <dependency>

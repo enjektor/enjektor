@@ -1,4 +1,4 @@
-package com.github.enjektor.utils;
+package com.github.enjektor.core.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;

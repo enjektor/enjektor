@@ -1,4 +1,4 @@
-package com.github.enjektor.utils.hash;
+package com.github.enjektor.core.util.hash;
 
 public interface HashProvider {
     byte provideByteHash(String source);

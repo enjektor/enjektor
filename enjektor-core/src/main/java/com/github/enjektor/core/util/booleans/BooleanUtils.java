@@ -1,4 +1,4 @@
-package com.github.enjektor.utils.booleans;
+package com.github.enjektor.core.util.booleans;
 
 public class BooleanUtils {
 

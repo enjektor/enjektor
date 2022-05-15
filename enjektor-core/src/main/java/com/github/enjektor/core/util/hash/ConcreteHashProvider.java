@@ -1,4 +1,4 @@
-package com.github.enjektor.utils.hash;
+package com.github.enjektor.core.util.hash;
 
 public class ConcreteHashProvider implements HashProvider {
 

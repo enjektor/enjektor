@@ -5,7 +5,7 @@ import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.context.injection.InjectionManager;
 import com.github.enjektor.core.bean.Bean;
-import com.github.enjektor.utils.NamingUtils;
+import com.github.enjektor.core.util.NamingUtils;
 
 import java.util.List;
 import java.util.Map;
