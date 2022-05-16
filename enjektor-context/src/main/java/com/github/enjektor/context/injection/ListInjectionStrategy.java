@@ -26,22 +26,26 @@ public class ListInjectionStrategy implements InjectionStrategy {
     public void inject(Object object,
                        Field field,
                        String value,
-                       ApplicationContext applicationContext,
-                       Map<Class<?>, Bean> beans) throws IllegalAccessException {
+                       ApplicationContext applicationContext) throws IllegalAccessException {
         final ParameterizedType listType = (ParameterizedType) field.getGenericType();
         final Class<?> listClass = (Class<?>) listType.getActualTypeArguments()[0];
         final Class<?> wrapperClass = wrappers.get(listClass);
 
         final String qualifier = value != null ? value : wrapperClass.getSimpleName();
-        final Object dependency = beans.get(wrapperClass).getDependency(qualifier);
-
         try {
-            final Object values = new PropertyDescriptor("values", wrapperClass).getReadMethod().invoke(dependency);
-            field.set(object, values);
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
+            Bean bean = (Bean) applicationContext.getBean(wrapperClass);
+            Object dependency = bean.getDependency(qualifier);
+
+            try {
+                final Object values = new PropertyDescriptor("values", wrapperClass).getReadMethod().invoke(dependency);
+                field.set(object, values);
+            } catch (InvocationTargetException | IntrospectionException e) {
+                e.printStackTrace();
+            }
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
         }
+
+
     }
 }

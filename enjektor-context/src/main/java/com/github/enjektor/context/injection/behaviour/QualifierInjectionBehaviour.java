@@ -12,8 +12,7 @@ public class QualifierInjectionBehaviour implements InjectionBehaviour {
     @Override
     public void act(Object object,
                     Field field,
-                    ApplicationContext applicationContext,
-                    Map<Class<?>, Bean> beans) throws IllegalAccessException, InstantiationException {
+                    ApplicationContext applicationContext) throws IllegalAccessException, InstantiationException {
         final Inject inject = field.getAnnotation(Inject.class);
         final String value = inject.value();
         if (value.isEmpty()) {

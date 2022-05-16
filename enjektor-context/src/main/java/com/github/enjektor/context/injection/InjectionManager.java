@@ -25,7 +25,7 @@ public class InjectionManager {
     public void manage(byte isSetAnyQualifier,
                        Object object,
                        Field field) throws IllegalAccessException, InstantiationException {
-        injectionBehaviours[isSetAnyQualifier].act(object, field, applicationContext, beans);
+        injectionBehaviours[isSetAnyQualifier].act(object, field, applicationContext);
     }
 
 }
