@@ -19,13 +19,15 @@ public class PrimitiveApplicationContext implements ApplicationContext, DeAlloca
     private ApplicationContext applicationContext;
 
     public PrimitiveApplicationContext(final Class<?> mainClass,
-                                       final List<DependencyInitializer> dependencyInitializers) {
+                                       final List<DependencyInitializer> dependencyInitializers,
+                                       final List<Pair> pairs) {
         this.applicationContext = new DefaultApplicationContext(mainClass, beans, dependencyInitializers);
-        init();
+        init(pairs);
     }
 
     @Override
-    public void init() {
+    public void init(List<Pair> pairs) {
+        for (Pair pair : pairs) beans.put(pair.getType(), pair.getBean());
         final InjectionManager injectionManager = new InjectionManager(applicationContext, beans);
         final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(injectionManager);
         beans.forEach(beanBiConsumer);
@@ -34,11 +36,6 @@ public class PrimitiveApplicationContext implements ApplicationContext, DeAlloca
     @Override
     public void destroy() {
         clean();
-    }
-
-    @Override
-    public void putDependency(Pair pair) {
-        beans.put(pair.getType(), pair.getBean());
     }
 
     @Override

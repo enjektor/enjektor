@@ -13,11 +13,17 @@ public class Enjektor {
     private ApplicationContext applicationContext;
 
     public Enjektor(Class<?> mainClass) {
-        this(mainClass, Collections.singletonList(new ConcreteDependencyInitializer()));
+        this(mainClass, null);
     }
 
-    public Enjektor(Class<?> mainClass, List<DependencyInitializer> dependencyInitializers) {
-        applicationContext = new PrimitiveApplicationContext(mainClass, dependencyInitializers);
+    public Enjektor(Class<?> mainClass, List<Pair> pairs) {
+        this(mainClass, Collections.singletonList(new ConcreteDependencyInitializer()), pairs);
+    }
+
+    public Enjektor(Class<?> mainClass,
+                    List<DependencyInitializer> dependencyInitializers,
+                    List<Pair> pairs) {
+        applicationContext = new PrimitiveApplicationContext(mainClass, dependencyInitializers, pairs);
     }
 
     public <T> T getDependency(final Class<T> classType) throws IllegalAccessException, InstantiationException {
@@ -26,10 +32,6 @@ public class Enjektor {
 
     public <T> T getDependency(final Class<T> classType, final String fieldName) throws IllegalAccessException, InstantiationException {
         return applicationContext.getBean(classType, fieldName);
-    }
-
-    public void putDependency(Pair pair) {
-        applicationContext.putDependency(pair);
     }
 
     public void destroy() {
@@ -42,6 +44,7 @@ public class Enjektor {
 
     public static class Builder {
         private List<DependencyInitializer> dependencyInitializers = new ArrayList<>();
+        private List<Pair> pairs = new ArrayList<>(3);
         private Class<?> mainClass;
 
         public Builder builder() {
@@ -58,8 +61,18 @@ public class Enjektor {
             return this;
         }
 
+        public Builder addPair(Pair pair) {
+            pairs.add(pair);
+            return this;
+        }
+
+        public Builder addPairs(List<Pair> pairs) {
+            pairs.addAll(pairs);
+            return this;
+        }
+
         public Enjektor build() {
-            return new Enjektor(mainClass, dependencyInitializers);
+            return new Enjektor(mainClass, dependencyInitializers, pairs);
         }
     }
 }

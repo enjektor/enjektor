@@ -35,18 +35,13 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
     }
 
     @Override
-    public void init() {
+    public void init(List<Pair> pairs) {
 
     }
 
     @Override
     public void destroy() {
         clean();
-    }
-
-    @Override
-    public void putDependency(Pair pair) {
-        throw new UnsupportedOperationException();
     }
 
     @Override
