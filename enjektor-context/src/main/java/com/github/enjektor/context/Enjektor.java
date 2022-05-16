@@ -2,6 +2,7 @@ package com.github.enjektor.context;
 
 import com.github.enjektor.context.dependency.ConcreteDependencyInitializer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
+import com.github.enjektor.core.bean.pair.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +26,10 @@ public class Enjektor {
 
     public <T> T getDependency(final Class<T> classType, final String fieldName) throws IllegalAccessException, InstantiationException {
         return applicationContext.getBean(classType, fieldName);
+    }
+
+    public void putDependency(Pair pair) {
+        applicationContext.putDependency(pair);
     }
 
     public void destroy() {

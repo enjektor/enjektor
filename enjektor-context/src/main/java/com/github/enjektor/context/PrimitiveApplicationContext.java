@@ -5,6 +5,7 @@ import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.context.injection.InjectionManager;
 import com.github.enjektor.core.bean.Bean;
+import com.github.enjektor.core.bean.pair.Pair;
 import com.github.enjektor.core.util.NamingUtils;
 
 import java.util.List;
@@ -33,6 +34,11 @@ public class PrimitiveApplicationContext implements ApplicationContext, DeAlloca
     @Override
     public void destroy() {
         clean();
+    }
+
+    @Override
+    public void putDependency(Pair pair) {
+        beans.put(pair.getType(), pair.getBean());
     }
 
     @Override

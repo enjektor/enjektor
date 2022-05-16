@@ -44,7 +44,6 @@ public class NonQualifierInjectionBehaviour implements InjectionBehaviour {
         final Inject inject = field.getAnnotation(Inject.class);
         final String value = inject.value();
 
-
         final String canonicalName = field.getType().getCanonicalName();
         if (value.isEmpty()) {
             final Set<Map.Entry<Predicate<String>, InjectionStrategy>> entries = map.entrySet();
