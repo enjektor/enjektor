@@ -33,8 +33,7 @@ public class ListInjectionStrategy implements InjectionStrategy {
 
         final String qualifier = value != null ? value : wrapperClass.getSimpleName();
         try {
-            Bean bean = (Bean) applicationContext.getBean(wrapperClass);
-            Object dependency = bean.getDependency(qualifier);
+            final Object dependency = applicationContext.getNativeBean(wrapperClass).getDependency(qualifier);
 
             try {
                 final Object values = new PropertyDescriptor("values", wrapperClass).getReadMethod().invoke(dependency);
