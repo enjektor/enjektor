@@ -5,6 +5,7 @@ import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.context.injector.Injector;
 import com.github.enjektor.context.injector.RecursiveFieldInjector;
 import com.github.enjektor.core.bean.Bean;
+import com.github.enjektor.core.bean.pair.Pair;
 import com.github.enjektor.core.util.NamingUtils;
 
 import java.util.List;
@@ -41,6 +42,11 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
     @Override
     public void destroy() {
         clean();
+    }
+
+    @Override
+    public void putDependency(Pair pair) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
