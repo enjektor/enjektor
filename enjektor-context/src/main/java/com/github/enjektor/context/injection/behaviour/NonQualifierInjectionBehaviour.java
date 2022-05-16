@@ -39,8 +39,7 @@ public class NonQualifierInjectionBehaviour implements InjectionBehaviour {
     @Override
     public void act(Object object,
                     Field field,
-                    ApplicationContext applicationContext,
-                    Map<Class<?>, Bean> beans) throws IllegalAccessException, InstantiationException {
+                    ApplicationContext applicationContext) throws IllegalAccessException, InstantiationException {
         final Inject inject = field.getAnnotation(Inject.class);
         final String value = inject.value();
 
@@ -52,7 +51,7 @@ public class NonQualifierInjectionBehaviour implements InjectionBehaviour {
                 final InjectionStrategy val = entry.getValue();
 
                 final boolean test = key.test(canonicalName);
-                if (test) val.inject(object, field, null, applicationContext, beans);
+                if (test) val.inject(object, field, null, applicationContext);
             }
         } else {
             final Object bean = Optional.ofNullable(applicationContext.getBean(field.getType(), value))

@@ -16,7 +16,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>5.6.0</junit.version>
-    <global.version>0.0.6.84</global.version>
+    <global.version>0.0.6.86</global.version>
 
     <java.version>11</java.version>
     <enjektor.main.class/>
@@ -25,10 +25,9 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
     <!-- sub module versions -->
-    <enjektor.context.version>0.0.7.4</enjektor.context.version>
+    <enjektor.context.version>0.0.7.51</enjektor.context.version>
     <enjektor.core.version>0.0.4.6</enjektor.core.version>
-    <enjektor.starter.version>0.0.1.RELEASE</enjektor.starter.version>
-    <enjektor.epel.version>0.0.2.2</enjektor.epel.version>
+    <enjektor.epel.version>0.0.2.52</enjektor.epel.version>
     <!-- sub module versions -->
   </properties>
 

@@ -9,6 +9,5 @@ import java.util.Map;
 public interface InjectionBehaviour {
     void act(Object object,
              Field field,
-             ApplicationContext applicationContext,
-             Map<Class<?>, Bean> beans) throws IllegalAccessException, InstantiationException;
+             ApplicationContext applicationContext) throws IllegalAccessException, InstantiationException;
 }
