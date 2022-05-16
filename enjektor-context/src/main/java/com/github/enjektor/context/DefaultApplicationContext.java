@@ -75,6 +75,11 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
     }
 
     @Override
+    public <T> Bean getNativeBean(Class<T> classType) throws IllegalAccessException, InstantiationException {
+        return beanHashMap.get(classType);
+    }
+
+    @Override
     public void clean() {
         recursiveInjector = null;
     }

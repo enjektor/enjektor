@@ -53,6 +53,11 @@ public class PrimitiveApplicationContext implements ApplicationContext, DeAlloca
     }
 
     @Override
+    public <T> Bean getNativeBean(Class<T> classType) throws IllegalAccessException, InstantiationException {
+        return beans.get(classType);
+    }
+
+    @Override
     public void clean() {
         applicationContext.destroy();
         applicationContext = null;
