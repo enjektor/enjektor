@@ -25,7 +25,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
     <!-- sub module versions -->
-    <enjektor.context.version>0.0.7.51</enjektor.context.version>
+    <enjektor.context.version>0.0.7.54</enjektor.context.version>
     <enjektor.core.version>0.0.4.6</enjektor.core.version>
     <enjektor.epel.version>0.0.2.52</enjektor.epel.version>
     <!-- sub module versions -->

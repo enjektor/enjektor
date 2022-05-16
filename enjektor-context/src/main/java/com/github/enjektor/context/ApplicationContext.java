@@ -2,12 +2,12 @@ package com.github.enjektor.context;
 
 import com.github.enjektor.core.bean.pair.Pair;
 
+import java.util.List;
+
 public interface ApplicationContext {
-    void init();
+    void init(List<Pair> pairs);
 
     void destroy();
-
-    void putDependency(Pair pair);
 
     <T> T getBean(final Class<T> classType) throws IllegalAccessException, InstantiationException;
 
