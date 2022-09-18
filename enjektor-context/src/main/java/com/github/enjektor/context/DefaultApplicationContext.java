@@ -4,8 +4,12 @@ import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.context.injector.Injector;
 import com.github.enjektor.context.injector.RecursiveFieldInjector;
+import com.github.enjektor.context.injector.strategy.InjectStrategy;
+import com.github.enjektor.context.injector.strategy.NonQualifierInjectStrategy;
 import com.github.enjektor.core.bean.Bean;
 import com.github.enjektor.core.bean.pair.Pair;
+import com.github.enjektor.core.scanner.field.FieldScanner;
+import com.github.enjektor.core.scanner.field.InjectAnnotationFieldScanner;
 import com.github.enjektor.core.util.NamingUtils;
 
 import java.util.List;
@@ -18,20 +22,22 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
     private static final byte NULL_CASE = (byte) 0;
     private static final byte NON_NULL_CASE = (byte) 1;
 
-    private final Map<Class<?>, Bean> beanHashMap;
+    private final Map<Class<?>, Bean> beans;
     private Injector recursiveInjector;
 
     public DefaultApplicationContext(final Class<?> mainClass,
-                                     final Map<Class<?>, Bean> beanHashMap,
+                                     final Map<Class<?>, Bean> beans,
                                      final List<DependencyInitializer> dependencyInitializers) {
-        this.beanHashMap = beanHashMap;
-        this.recursiveInjector = new RecursiveFieldInjector(beanHashMap);
+        final FieldScanner fieldScanner = new InjectAnnotationFieldScanner();
+
+        this.beans = beans;
+        this.recursiveInjector = new RecursiveFieldInjector(beans, fieldScanner);
         init(mainClass, dependencyInitializers);
     }
 
     private void init(final Class<?> mainClass, List<DependencyInitializer> dependencyInitializers) {
         for (final DependencyInitializer dependencyInitializer : dependencyInitializers)
-            beanHashMap.putAll(dependencyInitializer.initialize(mainClass));
+            beans.putAll(dependencyInitializer.initialize(mainClass));
     }
 
     @Override
@@ -52,7 +58,7 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
 
     @Override
     public <T> T getBean(final Class<T> classType, final String fieldName) throws IllegalAccessException {
-        final Bean bean = beanHashMap.get(classType);
+        final Bean bean = beans.get(classType);
         final byte stringOrNot = classType.equals(String.class) ? STRING_TYPE : OBJECT_TYPE;
         final byte nullOrNot = bean != null ? NON_NULL_CASE : NULL_CASE;
 
@@ -76,7 +82,7 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
 
     @Override
     public <T> Bean getNativeBean(Class<T> classType) throws IllegalAccessException, InstantiationException {
-        return beanHashMap.get(classType);
+        return beans.get(classType);
     }
 
     @Override

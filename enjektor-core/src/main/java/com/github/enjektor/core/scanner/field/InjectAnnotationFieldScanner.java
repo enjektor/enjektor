@@ -11,9 +11,11 @@ public class InjectAnnotationFieldScanner implements FieldScanner {
     public final THashSet<Field> scan(final Class<?> dependency) {
         final THashSet<Field> injectedFields = new THashSet<>(3);
         final Field[] fields = dependency.getDeclaredFields();
-        for (final Field field : fields)
+        for (final Field field : fields) {
+            field.setAccessible(true);
             if (field.isAnnotationPresent(Inject.class))
                 injectedFields.add(field);
+        }
 
         return injectedFields;
     }
