@@ -5,6 +5,7 @@ import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.context.injector.Injector;
 import com.github.enjektor.context.injector.RecursiveFieldInjector;
 import com.github.enjektor.core.bean.Bean;
+import com.github.enjektor.core.bean.pair.Pair;
 import com.github.enjektor.core.util.NamingUtils;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
     }
 
     @Override
-    public void init() {
+    public void init(List<Pair> pairs) {
 
     }
 
@@ -71,6 +72,11 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
 
         recursiveInjector.inject(existObject);
         return (T) existObject;
+    }
+
+    @Override
+    public <T> Bean getNativeBean(Class<T> classType) throws IllegalAccessException, InstantiationException {
+        return beanHashMap.get(classType);
     }
 
     @Override

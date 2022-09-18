@@ -10,6 +10,5 @@ public interface InjectionStrategy {
     void inject(Object object,
                 Field field,
                 String value,
-                ApplicationContext applicationContext,
-                Map<Class<?>, Bean> beans) throws InstantiationException, IllegalAccessException;
+                ApplicationContext applicationContext) throws InstantiationException, IllegalAccessException;
 }

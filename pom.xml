@@ -14,17 +14,20 @@
   </modules>
 
   <properties>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>5.6.0</junit.version>
-    <global.version>0.0.6.6</global.version>
+    <global.version>0.0.6.86</global.version>
+
+    <java.version>11</java.version>
+    <enjektor.main.class/>
+
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
 
     <!-- sub module versions -->
-    <enjektor.context.version>0.0.7.2</enjektor.context.version>
-    <enjektor.core.version>0.0.4.5</enjektor.core.version>
-    <enjektor.starter.version>0.0.1.RELEASE</enjektor.starter.version>
-    <enjektor.epel.version>0.0.2.2</enjektor.epel.version>
+    <enjektor.context.version>0.0.7.56</enjektor.context.version>
+    <enjektor.core.version>0.0.4.6</enjektor.core.version>
+    <enjektor.epel.version>0.0.2.52</enjektor.epel.version>
     <!-- sub module versions -->
   </properties>
 
@@ -244,6 +247,44 @@
             <goals>
               <goal>clean</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <configuration>
+          <mainClass>${enjektor.main.class}</mainClass>
+          <includePluginDependencies>true</includePluginDependencies>
+          <systemProperties>
+            <systemProperty>
+              <key>active.profile</key>
+            </systemProperty>
+          </systemProperties>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <archive>
+                <manifest>
+                  <mainClass>${enjektor.main.class}</mainClass>
+                </manifest>
+              </archive>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+            </configuration>
           </execution>
         </executions>
       </plugin>

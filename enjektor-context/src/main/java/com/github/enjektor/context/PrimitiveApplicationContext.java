@@ -5,6 +5,7 @@ import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.context.injection.InjectionManager;
 import com.github.enjektor.core.bean.Bean;
+import com.github.enjektor.core.bean.pair.Pair;
 import com.github.enjektor.core.util.NamingUtils;
 
 import java.util.List;
@@ -18,13 +19,15 @@ public class PrimitiveApplicationContext implements ApplicationContext, DeAlloca
     private ApplicationContext applicationContext;
 
     public PrimitiveApplicationContext(final Class<?> mainClass,
-                                       final List<DependencyInitializer> dependencyInitializers) {
+                                       final List<DependencyInitializer> dependencyInitializers,
+                                       final List<Pair> pairs) {
         this.applicationContext = new DefaultApplicationContext(mainClass, beans, dependencyInitializers);
-        init();
+        init(pairs);
     }
 
     @Override
-    public void init() {
+    public void init(List<Pair> pairs) {
+        for (Pair pair : pairs) beans.put(pair.getType(), pair.getBean());
         final InjectionManager injectionManager = new InjectionManager(applicationContext, beans);
         final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(injectionManager);
         beans.forEach(beanBiConsumer);
@@ -47,6 +50,11 @@ public class PrimitiveApplicationContext implements ApplicationContext, DeAlloca
         final Bean bean = beans.get(classType);
         final Object existObject = bean.getDependency(fieldName);
         return (T) existObject;
+    }
+
+    @Override
+    public <T> Bean getNativeBean(Class<T> classType) throws IllegalAccessException, InstantiationException {
+        return beans.get(classType);
     }
 
     @Override
