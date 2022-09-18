@@ -56,6 +56,10 @@ public class Bean {
             instancesOnRuntime.get(HASH_PROVIDER.provideByteHash(dependencyUniqueName)) : instancesOnRuntime.values()[0];
     }
 
+    public final Object getSingularDependency() {
+        return instancesOnRuntime.values()[0];
+    }
+
     public Class<?> getClassType() {
         return classType;
     }
