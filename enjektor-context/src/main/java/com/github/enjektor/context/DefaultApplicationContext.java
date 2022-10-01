@@ -22,8 +22,11 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
     private static final byte NULL_CASE = (byte) 0;
     private static final byte NON_NULL_CASE = (byte) 1;
 
+    private final static byte REQUIRED_COMPONENTS_ZERO_INDEX_REUSABLE_REFLECTIONS_OBJECT = (byte) 0x0;
+
     private final Map<Class<?>, Bean> beans;
     private Injector recursiveInjector;
+
 
     public DefaultApplicationContext(final Class<?> mainClass,
                                      final Map<Class<?>, Bean> beans,

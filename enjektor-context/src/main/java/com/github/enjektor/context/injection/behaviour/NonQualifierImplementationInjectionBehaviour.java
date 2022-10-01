@@ -5,7 +5,7 @@ import com.github.enjektor.core.annotations.Inject;
 
 import java.lang.reflect.Field;
 
-public class QualifierInjectionBehaviour implements InjectionBehaviour {
+public class NonQualifierImplementationInjectionBehaviour implements InjectionBehaviour {
 
     @Override
     public void act(final ApplicationContext applicationContext,
@@ -13,14 +13,8 @@ public class QualifierInjectionBehaviour implements InjectionBehaviour {
                     final Field field) throws IllegalAccessException, InstantiationException {
         final Inject inject = field.getAnnotation(Inject.class);
         final String value = inject.value();
-        if (value.isEmpty()) {
-            final Class<?> qualifier = inject.qualifier();
-            final Object beanInstance = applicationContext.getBean(qualifier);
-            field.set(object, beanInstance);
-        } else {
-            final Class<?> qualifier = inject.qualifier();
-            final Object beanInstance = applicationContext.getBean(qualifier, value);
-            field.set(object, beanInstance);
-        }
+        final Class<?> type = field.getType();
+        final Object beanInstance = applicationContext.getBean(type, value);
+        field.set(object, beanInstance);
     }
 }

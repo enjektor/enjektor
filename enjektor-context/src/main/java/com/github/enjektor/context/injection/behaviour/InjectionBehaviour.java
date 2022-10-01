@@ -7,7 +7,5 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 public interface InjectionBehaviour {
-    void act(Object object,
-             Field field,
-             ApplicationContext applicationContext) throws IllegalAccessException, InstantiationException;
+    void act(ApplicationContext applicationContext, Object object, Field field) throws IllegalAccessException, InstantiationException;
 }

@@ -1,5 +1,6 @@
 package com.github.enjektor.context;
 
+import com.github.enjektor.context.configuration.EnjektorConfiguration;
 import com.github.enjektor.context.dependency.ConcreteDependencyInitializer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.core.bean.pair.Pair;
@@ -10,27 +11,34 @@ import java.util.List;
 
 public class Enjektor {
 
-    private ApplicationContext applicationContext;
+    private final static byte REQUIRED_COMPONENTS_ZERO_INDEX_REUSABLE_REFLECTIONS_OBJECT = (byte) 0x0;
 
-    public Enjektor(Class<?> mainClass) {
-        this(mainClass, null);
+    private final ApplicationContext applicationContext;
+
+    private Enjektor(final Class<?> mainClass,
+                     final Object[] requiredComponents) {
+        this(mainClass, null, requiredComponents);
     }
 
-    public Enjektor(Class<?> mainClass, List<Pair> pairs) {
-        this(mainClass, Collections.singletonList(new ConcreteDependencyInitializer()), pairs);
+    private Enjektor(final Class<?> mainClass,
+                     final List<Pair> pairs,
+                     final Object[] requiredComponents) {
+        this(mainClass, Collections.singletonList(new ConcreteDependencyInitializer()), pairs, requiredComponents);
     }
 
-    public Enjektor(Class<?> mainClass,
-                    List<DependencyInitializer> dependencyInitializers,
-                    List<Pair> pairs) {
-        applicationContext = new PrimitiveApplicationContext(mainClass, dependencyInitializers, pairs);
+    private Enjektor(final Class<?> mainClass,
+                     final List<DependencyInitializer> dependencyInitializers,
+                     final List<Pair> pairs,
+                     final Object[] requiredComponents) {
+        this.applicationContext = new PrimitiveApplicationContext(mainClass, dependencyInitializers, pairs, requiredComponents);
     }
 
     public <T> T getDependency(final Class<T> classType) throws IllegalAccessException, InstantiationException {
         return applicationContext.getBean(classType);
     }
 
-    public <T> T getDependency(final Class<T> classType, final String fieldName) throws IllegalAccessException, InstantiationException {
+    public <T> T getDependency(final Class<T> classType,
+                               final String fieldName) throws IllegalAccessException, InstantiationException {
         return applicationContext.getBean(classType, fieldName);
     }
 
@@ -42,37 +50,44 @@ public class Enjektor {
         return new Builder();
     }
 
-    public static class Builder {
-        private List<DependencyInitializer> dependencyInitializers = new ArrayList<>();
-        private List<Pair> pairs = new ArrayList<>(3);
-        private Class<?> mainClass;
+    public final static class Builder {
+        private final static byte INITIAL_CAPACITY = (byte) 0x3;
+        private final List<DependencyInitializer> dependencyInitializers = new ArrayList<>(INITIAL_CAPACITY);
+        private final List<Pair> pairs = new ArrayList<>(INITIAL_CAPACITY);
+        private EnjektorConfiguration enjektorConfiguration;
 
         public Builder builder() {
             return this;
         }
 
-        public Builder withMainClass(Class<?> mainClass) {
-            this.mainClass = mainClass;
-            return this;
-        }
 
-        public Builder addDependencyInitializer(DependencyInitializer dependencyInitializer) {
+        public Builder addDependencyInitializer(final DependencyInitializer dependencyInitializer) {
             dependencyInitializers.add(dependencyInitializer);
             return this;
         }
 
-        public Builder addPair(Pair pair) {
+        public Builder configuration(final EnjektorConfiguration enjektorConfiguration) {
+            this.enjektorConfiguration = enjektorConfiguration;
+            return this;
+        }
+
+        public Builder addPair(final Pair pair) {
             pairs.add(pair);
             return this;
         }
 
-        public Builder addPairs(List<Pair> pairs) {
+        public Builder addPairs(final List<Pair> pairs) {
             pairs.addAll(pairs);
             return this;
         }
 
         public Enjektor build() {
-            return new Enjektor(mainClass, dependencyInitializers, pairs);
+            final Class<?> mainClass = enjektorConfiguration.getMainClass();
+            final Object[] requiredComponents = new Object[INITIAL_CAPACITY];
+            requiredComponents[REQUIRED_COMPONENTS_ZERO_INDEX_REUSABLE_REFLECTIONS_OBJECT] = enjektorConfiguration.getReflections();
+
+
+            return new Enjektor(mainClass, dependencyInitializers, pairs, requiredComponents);
         }
     }
 }
