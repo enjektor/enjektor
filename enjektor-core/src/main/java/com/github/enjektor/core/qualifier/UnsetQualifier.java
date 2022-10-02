@@ -1,4 +1,4 @@
 package com.github.enjektor.core.qualifier;
 
-public class UnsetQualifier {
+public final class UnsetQualifier {
 }

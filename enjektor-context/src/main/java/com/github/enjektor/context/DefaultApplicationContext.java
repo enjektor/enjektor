@@ -2,15 +2,13 @@ package com.github.enjektor.context;
 
 import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.context.handler.DeAllocationHandler;
-import com.github.enjektor.context.injector.Injector;
-import com.github.enjektor.context.injector.RecursiveFieldInjector;
-import com.github.enjektor.context.injector.strategy.InjectStrategy;
-import com.github.enjektor.context.injector.strategy.NonQualifierInjectStrategy;
+import com.github.enjektor.context.injection.RecursiveFieldInjectionManager;
 import com.github.enjektor.core.bean.Bean;
 import com.github.enjektor.core.bean.pair.Pair;
 import com.github.enjektor.core.scanner.field.FieldScanner;
 import com.github.enjektor.core.scanner.field.InjectAnnotationFieldScanner;
 import com.github.enjektor.core.util.NamingUtils;
+import org.reflections.Reflections;
 
 import java.util.List;
 import java.util.Map;
@@ -25,16 +23,19 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
     private final static byte REQUIRED_COMPONENTS_ZERO_INDEX_REUSABLE_REFLECTIONS_OBJECT = (byte) 0x0;
 
     private final Map<Class<?>, Bean> beans;
-    private Injector recursiveInjector;
+    private RecursiveFieldInjectionManager recursiveFieldInjectionManager;
 
 
     public DefaultApplicationContext(final Class<?> mainClass,
                                      final Map<Class<?>, Bean> beans,
-                                     final List<DependencyInitializer> dependencyInitializers) {
+                                     final List<DependencyInitializer> dependencyInitializers,
+                                     final Object[] requiredComponents) {
         final FieldScanner fieldScanner = new InjectAnnotationFieldScanner();
+        final Reflections reflections = (Reflections) requiredComponents[REQUIRED_COMPONENTS_ZERO_INDEX_REUSABLE_REFLECTIONS_OBJECT];
 
         this.beans = beans;
-        this.recursiveInjector = new RecursiveFieldInjector(beans, fieldScanner);
+        this.recursiveFieldInjectionManager = new RecursiveFieldInjectionManager(this, fieldScanner, reflections);
+
         init(mainClass, dependencyInitializers);
     }
 
@@ -54,13 +55,13 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
     }
 
     @Override
-    public <T> T getBean(final Class<T> classType) throws IllegalAccessException {
+    public <T> T getBean(final Class<T> classType) throws IllegalAccessException, InstantiationException {
         final String beanName = NamingUtils.beanCase(classType.getSimpleName());
         return getBean(classType, beanName);
     }
 
     @Override
-    public <T> T getBean(final Class<T> classType, final String fieldName) throws IllegalAccessException {
+    public <T> T getBean(final Class<T> classType, final String fieldName) throws IllegalAccessException, InstantiationException {
         final Bean bean = beans.get(classType);
         final byte stringOrNot = classType.equals(String.class) ? STRING_TYPE : OBJECT_TYPE;
         final byte nullOrNot = bean != null ? NON_NULL_CASE : NULL_CASE;
@@ -79,7 +80,7 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
 
         final Object existObject = bean.getDependency(fieldName);
 
-        recursiveInjector.inject(existObject);
+        recursiveFieldInjectionManager.inject(existObject);
         return (T) existObject;
     }
 
@@ -90,6 +91,6 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
 
     @Override
     public void clean() {
-        recursiveInjector = null;
+        recursiveFieldInjectionManager = null;
     }
 }

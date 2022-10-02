@@ -3,7 +3,7 @@ package com.github.enjektor.context;
 import com.github.enjektor.context.consumer.BeanInstantiateBiConsumer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.context.handler.DeAllocationHandler;
-import com.github.enjektor.context.injection.InjectionManager;
+import com.github.enjektor.context.injection.QualifierInjectionManager;
 import com.github.enjektor.core.bean.Bean;
 import com.github.enjektor.core.bean.pair.Pair;
 import com.github.enjektor.core.util.NamingUtils;
@@ -18,7 +18,6 @@ public class PrimitiveApplicationContext implements ApplicationContext, DeAlloca
 
     private final static byte REQUIRED_COMPONENTS_ZERO_INDEX_REUSABLE_REFLECTIONS_OBJECT = (byte) 0x0;
 
-
     private Map<Class<?>, Bean> beans = new WeakHashMap<>();
     private ApplicationContext applicationContext;
     private Object[] requiredComponents;
@@ -27,18 +26,18 @@ public class PrimitiveApplicationContext implements ApplicationContext, DeAlloca
                                        final List<DependencyInitializer> dependencyInitializers,
                                        final List<Pair> pairs,
                                        final Object[] requiredComponents) {
-        this.applicationContext = new DefaultApplicationContext(mainClass, beans, dependencyInitializers);
+        this.applicationContext = new DefaultApplicationContext(mainClass, beans, dependencyInitializers, requiredComponents);
         this.requiredComponents = requiredComponents;
         init(pairs);
     }
 
     @Override
     public void init(final List<Pair> pairs) {
-        for (Pair pair : pairs) beans.put(pair.getType(), pair.getBean());
+        for (final Pair pair : pairs) beans.put(pair.getType(), pair.getBean());
 
         final Reflections reflections = (Reflections) requiredComponents[REQUIRED_COMPONENTS_ZERO_INDEX_REUSABLE_REFLECTIONS_OBJECT];
-        final InjectionManager injectionManager = new InjectionManager(applicationContext, reflections);
-        final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(injectionManager);
+        final QualifierInjectionManager qualifierInjectionManager = new QualifierInjectionManager(applicationContext, reflections);
+        final BiConsumer<Class<?>, Bean> beanBiConsumer = new BeanInstantiateBiConsumer(qualifierInjectionManager);
         beans.forEach(beanBiConsumer);
     }
 
@@ -48,21 +47,21 @@ public class PrimitiveApplicationContext implements ApplicationContext, DeAlloca
     }
 
     @Override
-    public final <T> T getBean(final Class<T> classType) throws IllegalAccessException {
+    public final <T> T getBean(final Class<T> classType) {
         final String beanName = NamingUtils.beanCase(classType.getSimpleName());
         return getBean(classType, beanName);
     }
 
     @Override
     public final <T> T getBean(final Class<T> classType,
-                               final String fieldName) throws IllegalAccessException {
+                               final String fieldName) {
         final Bean bean = beans.get(classType);
         final Object existObject = bean.getDependency(fieldName);
         return (T) existObject;
     }
 
     @Override
-    public <T> Bean getNativeBean(Class<T> classType) throws IllegalAccessException, InstantiationException {
+    public <T> Bean getNativeBean(Class<T> classType) {
         return beans.get(classType);
     }
 
