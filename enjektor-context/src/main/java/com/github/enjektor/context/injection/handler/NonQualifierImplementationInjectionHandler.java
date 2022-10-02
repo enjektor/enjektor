@@ -1,4 +1,4 @@
-package com.github.enjektor.context.injection.qualifier;
+package com.github.enjektor.context.injection.handler;
 
 import com.github.enjektor.context.ApplicationContext;
 import com.github.enjektor.context.injection.RecursiveFieldInjectionManager;
@@ -6,7 +6,6 @@ import com.github.enjektor.core.annotations.Inject;
 import com.github.enjektor.core.bean.Bean;
 
 import java.lang.reflect.Field;
-import java.util.Map;
 
 public class NonQualifierImplementationInjectionHandler implements InjectionHandler {
 

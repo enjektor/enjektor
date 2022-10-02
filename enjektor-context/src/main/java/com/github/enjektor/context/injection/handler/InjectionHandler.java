@@ -1,4 +1,4 @@
-package com.github.enjektor.context.injection.qualifier;
+package com.github.enjektor.context.injection.handler;
 
 import com.github.enjektor.context.ApplicationContext;
 

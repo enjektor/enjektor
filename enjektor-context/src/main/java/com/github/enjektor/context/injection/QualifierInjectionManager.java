@@ -1,10 +1,10 @@
 package com.github.enjektor.context.injection;
 
 import com.github.enjektor.context.ApplicationContext;
-import com.github.enjektor.context.injection.qualifier.NonQualifierImplementationInjectionHandler;
-import com.github.enjektor.context.injection.qualifier.NonQualifierInterfaceInjectionHandler;
-import com.github.enjektor.context.injection.qualifier.QualifierInjectionHandler;
-import com.github.enjektor.context.injection.qualifier.InjectionHandler;
+import com.github.enjektor.context.injection.handler.NonQualifierImplementationInjectionHandler;
+import com.github.enjektor.context.injection.handler.NonQualifierInterfaceInjectionHandler;
+import com.github.enjektor.context.injection.handler.QualifierInjectionHandler;
+import com.github.enjektor.context.injection.handler.InjectionHandler;
 import com.github.enjektor.core.annotations.Inject;
 import com.github.enjektor.core.qualifier.UnsetQualifier;
 import gnu.trove.map.TByteObjectMap;

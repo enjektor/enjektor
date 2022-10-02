@@ -1,12 +1,11 @@
 package com.github.enjektor.context.injection;
 
 import com.github.enjektor.context.ApplicationContext;
-import com.github.enjektor.context.injection.qualifier.InjectionHandler;
-import com.github.enjektor.context.injection.qualifier.NonQualifierImplementationInjectionHandler;
-import com.github.enjektor.context.injection.qualifier.NonQualifierInterfaceInjectionHandler;
-import com.github.enjektor.context.injection.qualifier.QualifierInjectionHandler;
+import com.github.enjektor.context.injection.handler.InjectionHandler;
+import com.github.enjektor.context.injection.handler.NonQualifierImplementationInjectionHandler;
+import com.github.enjektor.context.injection.handler.NonQualifierInterfaceInjectionHandler;
+import com.github.enjektor.context.injection.handler.QualifierInjectionHandler;
 import com.github.enjektor.core.annotations.Inject;
-import com.github.enjektor.core.bean.Bean;
 import com.github.enjektor.core.qualifier.UnsetQualifier;
 import com.github.enjektor.core.scanner.field.FieldScanner;
 import gnu.trove.map.TByteObjectMap;
@@ -14,7 +13,6 @@ import gnu.trove.map.hash.TByteObjectHashMap;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Field;
-import java.util.Map;
 import java.util.Set;
 
 public class RecursiveFieldInjectionManager {
