@@ -1,4 +1,4 @@
-package com.github.enjektor.core.scanner.field;
+package com.github.enjektor.core.reflection.scanner.field;
 
 import com.github.enjektor.core.annotations.Inject;
 import gnu.trove.set.hash.THashSet;

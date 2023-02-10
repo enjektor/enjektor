@@ -1,5 +1,6 @@
-package com.github.enjektor.core.scanner;
+package com.github.enjektor.core.reflection.scanner;
 
+import com.github.enjektor.core.reflection.ReflectionScanner;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -9,16 +10,8 @@ import org.reflections.util.FilterBuilder;
 
 import java.util.Set;
 
-public class ConcreteClassScanner implements ClassScanner<Object> {
+public class SubclassReflectionScanner implements ReflectionScanner<Object> {
 
-    private static ConcreteClassScanner concreteClassScanner = null;
-
-    public static ConcreteClassScanner getInstance() {
-        if (concreteClassScanner == null) concreteClassScanner = new ConcreteClassScanner();
-        return concreteClassScanner;
-    }
-
-    @Override
     public final Set<Class<?>> scan(final Class<?> mainClass,
                                     final Class<?> interfaceClass) {
         final String packageName = mainClass.getPackage().getName();

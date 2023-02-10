@@ -5,8 +5,8 @@ import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.context.injection.RecursiveFieldInjectionManager;
 import com.github.enjektor.core.bean.Bean;
 import com.github.enjektor.core.bean.pair.Pair;
-import com.github.enjektor.core.scanner.field.FieldScanner;
-import com.github.enjektor.core.scanner.field.InjectAnnotationFieldScanner;
+import com.github.enjektor.core.reflection.scanner.field.FieldScanner;
+import com.github.enjektor.core.reflection.scanner.field.InjectAnnotationFieldScanner;
 import com.github.enjektor.core.util.NamingUtils;
 import org.reflections.Reflections;
 
@@ -39,9 +39,10 @@ public class DefaultApplicationContext implements ApplicationContext, DeAllocati
         init(mainClass, dependencyInitializers);
     }
 
-    private void init(final Class<?> mainClass, List<DependencyInitializer> dependencyInitializers) {
+    private void init(final Class<?> mainClass,
+                      final List<DependencyInitializer> dependencyInitializers) {
         for (final DependencyInitializer dependencyInitializer : dependencyInitializers)
-            beans.putAll(dependencyInitializer.initialize(mainClass));
+            beans.putAll(dependencyInitializer.initialize(mainClass, beans));
     }
 
     @Override

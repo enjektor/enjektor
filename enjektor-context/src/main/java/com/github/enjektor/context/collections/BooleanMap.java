@@ -1,4 +1,4 @@
-package com.github.enjektor.context.collection;
+package com.github.enjektor.context.collections;
 
 import java.lang.reflect.Array;
 import java.util.Collection;

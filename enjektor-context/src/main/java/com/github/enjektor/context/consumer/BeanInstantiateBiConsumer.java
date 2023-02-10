@@ -17,7 +17,7 @@ public final class BeanInstantiateBiConsumer implements BiConsumer<Class<?>, Bea
     }
 
     @Override
-    public void accept(final Class<?> klass,
+    public void accept(final Class<?> alass,
                        final Bean bean) {
         final TByteObjectMap<Object> instancesOnRuntime = bean.getInstancesOnRuntime();
 

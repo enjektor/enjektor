@@ -6,7 +6,7 @@ import com.github.enjektor.core.bean.pair.Pair;
 import java.util.List;
 
 public interface ApplicationContext {
-    void init(List<Pair> pairs);
+    void init(final List<Pair> pairs);
 
     void destroy();
 

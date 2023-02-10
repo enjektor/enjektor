@@ -20,6 +20,7 @@ public class Bean {
 
     public Bean(final Class<?> classType) {
         this.classType = classType;
+        register(classType);
     }
 
     public final void register(String beanName, Object object) {

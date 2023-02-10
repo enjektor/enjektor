@@ -2,7 +2,7 @@ package com.github.enjektor.context.pg;
 
 import com.github.enjektor.context.Enjektor;
 import com.github.enjektor.context.configuration.EnjektorConfiguration;
-import com.github.enjektor.context.dependency.ConcreteDependencyInitializer;
+import com.github.enjektor.context.dependency.DefaultDependencyInitializer;
 
 public class EnjektorContextMain {
 
@@ -14,7 +14,7 @@ public class EnjektorContextMain {
 
         final Enjektor enjektor = Enjektor.builder()
             .configuration(configuration)
-            .addDependencyInitializer(new ConcreteDependencyInitializer())
+            .addDependencyInitializer(new DefaultDependencyInitializer())
             .build();
 
         SampleDependency dependency = enjektor.getDependency(SampleDependency.class);
