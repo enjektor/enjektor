@@ -26,6 +26,7 @@ public class PrimitiveApplicationContext implements ApplicationContext, DeAlloca
                                        final List<DependencyInitializer> dependencyInitializers,
                                        final List<Pair> pairs,
                                        final Object[] requiredComponents) {
+
         this.applicationContext = new DefaultApplicationContext(mainClass, beans, dependencyInitializers, requiredComponents);
         this.requiredComponents = requiredComponents;
         init(pairs);

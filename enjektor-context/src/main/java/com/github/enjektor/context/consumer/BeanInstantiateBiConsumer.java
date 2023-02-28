@@ -17,22 +17,20 @@ public final class BeanInstantiateBiConsumer implements BiConsumer<Class<?>, Bea
     }
 
     @Override
-    public void accept(final Class<?> klass,
+    public void accept(final Class<?> alass,
                        final Bean bean) {
         final TByteObjectMap<Object> instancesOnRuntime = bean.getInstancesOnRuntime();
 
         try {
             for (final Object runtimeInstance : instancesOnRuntime.values()) {
-                final Field[] declaredFields = runtimeInstance.getClass().getDeclaredFields();
+                final Field[] fields = runtimeInstance.getClass().getDeclaredFields();
 
-                for (final Field field : declaredFields) {
+                for (final Field field : fields)
                     if (field.isAnnotationPresent(Inject.class)) {
                         field.setAccessible(true);
                         qualifierInjectionManager.manage(runtimeInstance, field);
                     }
-                }
             }
-
         } catch (Exception ignored) {
         }
     }

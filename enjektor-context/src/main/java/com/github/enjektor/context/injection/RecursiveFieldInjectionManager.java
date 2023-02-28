@@ -7,7 +7,7 @@ import com.github.enjektor.context.injection.handler.NonQualifierInterfaceInject
 import com.github.enjektor.context.injection.handler.QualifierInjectionHandler;
 import com.github.enjektor.core.annotations.Inject;
 import com.github.enjektor.core.qualifier.UnsetQualifier;
-import com.github.enjektor.core.scanner.field.FieldScanner;
+import com.github.enjektor.core.reflection.scanner.field.FieldScanner;
 import gnu.trove.map.TByteObjectMap;
 import gnu.trove.map.hash.TByteObjectHashMap;
 import org.reflections.Reflections;

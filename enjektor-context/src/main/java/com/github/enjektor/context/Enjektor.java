@@ -1,7 +1,7 @@
 package com.github.enjektor.context;
 
 import com.github.enjektor.context.configuration.EnjektorConfiguration;
-import com.github.enjektor.context.dependency.ConcreteDependencyInitializer;
+import com.github.enjektor.context.dependency.DefaultDependencyInitializer;
 import com.github.enjektor.context.dependency.DependencyInitializer;
 import com.github.enjektor.core.bean.pair.Pair;
 
@@ -23,7 +23,7 @@ public class Enjektor {
     private Enjektor(final Class<?> mainClass,
                      final List<Pair> pairs,
                      final Object[] requiredComponents) {
-        this(mainClass, Collections.singletonList(new ConcreteDependencyInitializer()), pairs, requiredComponents);
+        this(mainClass, Collections.singletonList(new DefaultDependencyInitializer()), pairs, requiredComponents);
     }
 
     private Enjektor(final Class<?> mainClass,
@@ -55,11 +55,6 @@ public class Enjektor {
         private final List<DependencyInitializer> dependencyInitializers = new ArrayList<>(INITIAL_CAPACITY);
         private final List<Pair> pairs = new ArrayList<>(INITIAL_CAPACITY);
         private EnjektorConfiguration enjektorConfiguration;
-
-        public Builder builder() {
-            return this;
-        }
-
 
         public Builder addDependencyInitializer(final DependencyInitializer dependencyInitializer) {
             dependencyInitializers.add(dependencyInitializer);
