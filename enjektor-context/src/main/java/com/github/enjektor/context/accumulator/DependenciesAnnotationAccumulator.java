@@ -2,10 +2,7 @@ package com.github.enjektor.context.accumulator;
 
 import com.github.enjektor.core.annotations.Dependencies;
 import com.github.enjektor.core.bean.Bean;
-import com.github.enjektor.core.reflection.scanner.AnnotationReflectionScanner;
-import com.github.enjektor.core.util.NamingUtils;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -14,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class MultipleDependencyAnnotationAccumulator extends AbstractAnnotationAccumulator {
+public class DependenciesAnnotationAccumulator extends AbstractAnnotationAccumulator {
 
     @Override
     public List<Bean> accumulate(Class<?> mainClass, Map<Class<?>, Bean> beans) {

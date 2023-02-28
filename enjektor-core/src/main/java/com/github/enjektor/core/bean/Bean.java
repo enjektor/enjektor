@@ -46,15 +46,16 @@ public class Bean {
             final String className = dependencyNameOpt.orElse(simpleClassName);
             final byte hash = HASH_PROVIDER.provideByteHash(className);
             instancesOnRuntime.put(hash, implementationInstance);
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+                 InvocationTargetException e) {
             // TODO: add sl4fj
             e.printStackTrace();
         }
     }
 
     public final Object getDependency(final String dependencyUniqueName) {
-        return instancesOnRuntime.size() != 1 ?
-            instancesOnRuntime.get(HASH_PROVIDER.provideByteHash(dependencyUniqueName)) : instancesOnRuntime.values()[0];
+        final byte hash = HASH_PROVIDER.provideByteHash(dependencyUniqueName);
+        return instancesOnRuntime.size() != 1 ? instancesOnRuntime.get(hash) : getInstancesOnRuntime();
     }
 
     public final Object getSingularDependency() {

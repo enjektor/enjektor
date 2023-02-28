@@ -3,7 +3,6 @@ package com.github.enjektor.context.accumulator;
 import com.github.enjektor.core.annotations.Dependency;
 import com.github.enjektor.core.bean.Bean;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +16,13 @@ public final class DependencyAnnotationAccumulator extends AbstractAnnotationAcc
     public List<Bean> accumulate(final Class<?> mainClass,
                                  final Map<Class<?>, Bean> beans) {
         final Set<Class<?>> classes = annotationReflectionScanner.scan(mainClass, Dependency.class);
-        final List<Bean> interfaceBeans = accumulateInterfaces(mainClass, classes);
+//        final List<Bean> interfaceBeans = accumulateInterfaces(mainClass, classes);
         final Stream<Bean> implementationBeansStream = mapNonInterfaceClasses(classes);
 
-        return Stream
-            .concat(interfaceBeans.stream(), implementationBeansStream)
-            .collect(Collectors.toList());
+//        return Stream
+//            .concat(interfaceBeans.stream(), implementationBeansStream)
+//            .collect(Collectors.toList());
+        return implementationBeansStream.collect(Collectors.toList());
     }
 
     private List<Bean> accumulateInterfaces(final Class<?> mainClass, final Set<Class<?>> classes) {
