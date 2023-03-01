@@ -10,4 +10,3 @@ import java.lang.annotation.Target;
 public @interface Dependency {
     String name() default "";
 }
-

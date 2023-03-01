@@ -1,4 +1,4 @@
-package com.github.enjektor.context.dependency;
+package com.github.enjektor.context.initializer;
 
 import com.github.enjektor.core.bean.Bean;
 
