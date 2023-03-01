@@ -26,7 +26,7 @@
 
     <!-- sub module versions -->
     <enjektor.context.version>0.0.7.6</enjektor.context.version>
-    <enjektor.core.version>0.0.4.6</enjektor.core.version>
+    <enjektor.core.version>0.0.4.9</enjektor.core.version>
     <enjektor.epel.version>0.0.2.52</enjektor.epel.version>
     <!-- sub module versions -->
   </properties>

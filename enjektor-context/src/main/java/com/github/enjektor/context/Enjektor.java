@@ -1,9 +1,10 @@
 package com.github.enjektor.context;
 
 import com.github.enjektor.context.configuration.EnjektorConfiguration;
-import com.github.enjektor.context.dependency.DefaultDependencyInitializer;
-import com.github.enjektor.context.dependency.DependencyInitializer;
+import com.github.enjektor.context.initializer.DefaultDependencyInitializer;
+import com.github.enjektor.context.initializer.DependencyInitializer;
 import com.github.enjektor.core.bean.pair.Pair;
+import vlsi.utils.CompactHashMapDefaultValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,11 +78,12 @@ public class Enjektor {
         }
 
         public Enjektor build() {
+            CompactHashMapDefaultValues.add("height", "auto");
+            CompactHashMapDefaultValues.add("width");
+
             final Class<?> mainClass = enjektorConfiguration.getMainClass();
             final Object[] requiredComponents = new Object[INITIAL_CAPACITY];
             requiredComponents[REQUIRED_COMPONENTS_ZERO_INDEX_REUSABLE_REFLECTIONS_OBJECT] = enjektorConfiguration.getReflections();
-
-
             return new Enjektor(mainClass, dependencyInitializers, pairs, requiredComponents);
         }
     }

@@ -1,7 +1,7 @@
 package com.github.enjektor.context;
 
 import com.github.enjektor.context.consumer.BeanInstantiateBiConsumer;
-import com.github.enjektor.context.dependency.DependencyInitializer;
+import com.github.enjektor.context.initializer.DependencyInitializer;
 import com.github.enjektor.context.handler.DeAllocationHandler;
 import com.github.enjektor.context.injection.QualifierInjectionManager;
 import com.github.enjektor.core.bean.Bean;

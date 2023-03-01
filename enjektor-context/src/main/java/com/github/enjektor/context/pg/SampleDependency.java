@@ -19,6 +19,17 @@ public class SampleDependency {
 //    @Inject(value = "sum10")
 //    private Sum sum1;
 
+    private int x;
+
+
+    public SampleDependency(int x) {
+        this.x = x;
+    }
+
+//    public SampleDependency() {
+//
+//    }
+
     public void anyExecutableMethod() {
         int sum = sum10.sum(13);
         System.out.println("sum = " + sum);
